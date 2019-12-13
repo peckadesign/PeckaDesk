@@ -1,0 +1,19 @@
+version: '3'
+
+#services:
+#  web:
+#    environment:
+#      VIRTUAL_HOST: peckadesk.test
+#      XDEBUG_CONFIG: remote_host=docker.for.mac.localhost
+#    volumes:
+#      - ./.docker/web/apache/local:/etc/apache2/sites-enabled
+
+#  composer:
+#    environment:
+#      COMPOSER_AUTH: '{"github-oauth": {"github.com": ""}}' #https://github.com/settings/tokens/new?scopes=repo&description=COMPOSER_AUTH_TOKEN
+
+
+#networks:
+#  default:
+#    external:
+#      name: nginx-proxy

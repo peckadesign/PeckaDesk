@@ -1,0 +1,17 @@
+parameters:
+
+
+application:
+	errorPresenter: Error
+	scanDirs: off
+	mapping:
+		*: ['PeckaDesk', '*', 'Presenters\*Presenter']
+
+
+session:
+	expiration: 14 days
+
+
+services:
+	router:
+		factory: \PeckaDesk\Router\RouterFactory::createRouter

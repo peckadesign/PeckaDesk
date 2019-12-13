@@ -1,0 +1,4 @@
+app/config/local.neon
+vendor/
+docker-compose.override.yml
+.docker/web/apache/local
