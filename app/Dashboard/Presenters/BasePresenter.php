@@ -8,4 +8,16 @@ namespace PeckaDesk\Dashboard\Presenters;
 abstract class BasePresenter extends \Nette\Application\UI\Presenter
 {
 
+	/**
+	 * @return array<string>
+	 */
+	public function formatLayoutTemplateFiles(): array
+	{
+		$layouts = parent::formatLayoutTemplateFiles();
+
+		\array_unshift($layouts, __DIR__ . '/templates/@layout.latte');
+
+		return $layouts;
+	}
+
 }

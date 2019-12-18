@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+ web:
+    volumes:
+      - ./.docker/web/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    environment:
+      XDEBUG_CONFIG: remote_host=docker.for.mac.localhost

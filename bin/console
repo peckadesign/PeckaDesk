@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php declare(strict_types = 1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$configurator = \PeckaDesk\Bootstrap::boot();
+$exit = $configurator
+	->createContainer()
+	->getByType(\Contributte\Console\Application::class)
+	->run()
+;
+
+exit($exit);

@@ -1,0 +1,29 @@
+{block content}
+
+{form form}
+
+<div class="row">
+	<div class="col-sm-6">
+		<div class="card">
+			<div class="card-header">
+				<strong>Issue</strong>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label n:name="\PeckaDesk\Dashboard\Issues\Forms\EditFormFactory::CONTROL_NAME">Name</label>
+							<input n:name="\PeckaDesk\Dashboard\Issues\Forms\EditFormFactory::CONTROL_NAME" class="form-control" type="text" placeholder="Enter your name">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-footer">
+				<button n:name="save" class="btn btn-sm btn-primary" type="submit">Submit</button>
+				<button class="btn btn-sm btn-danger" type="reset">Reset</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{/form}

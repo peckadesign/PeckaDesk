@@ -1,0 +1,5 @@
+parameters:
+	langs:
+		name: Název
+		saved: Uloženo
+		edit: Upravit

@@ -1,3 +1,29 @@
+includes:
+	- lang.neon
+
+
+extensions:
+	peckadesk: \PeckaDesk\DI\Extension
+	console: \Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+	migrations: \Nextras\Migrations\Bridges\NetteDI\MigrationsExtension
+
+
+console:
+    name: PeckaDesk
+    version: '1.0'
+    catchExceptions: on
+    autoExit: on
+    url: http://d.peckadesk.peckadesign.com/
+    lazy: off
+
+
+migrations:
+    dir: %appDir%/../migrations
+    driver: mysql
+    dbal: doctrine
+    withDummyData: off
+
+
 parameters:
 
 
@@ -13,5 +39,59 @@ session:
 
 
 services:
+	routerFactory:
+		factory: \PeckaDesk\Router\RouterFactory
+
 	router:
-		factory: \PeckaDesk\Router\RouterFactory::createRouter
+		factory: @\PeckaDesk\Router\RouterFactory::createRouter
+
+	-
+		factory: \PeckaDesk\Dashboard\Grids\BaseFactory
+
+	-
+		factory: \PeckaDesk\Dashboard\Projects\Grids\Factory
+
+	-
+		factory: \PeckaDesk\Model\EntityManagerFactory
+		arguments:
+			debugMode: %debugMode%
+			paths:
+				- %appDir%/Model/Projects
+			proxyDir: %tempDir%/proxy
+
+	-
+		class: \Doctrine\ORM\EntityManager
+		factory: @\PeckaDesk\Model\EntityManagerFactory::create
+
+	-
+		class: \Doctrine\DBAL\Connection
+		factory: \Doctrine\DBAL\DriverManager::getConnection(%database%)
+
+	-
+		factory: \PeckaDesk\Dashboard\Forms\BaseFactory
+
+	-
+		factory: \PeckaDesk\Dashboard\Projects\Forms\EditFormFactory
+
+	translator:
+		factory: \PeckaDesk\Dashboard\Translator
+		arguments:
+			langs: %langs%
+
+	-
+		factory: \PeckaDesk\Dashboard\Issues\Grids\Factory
+
+	-
+		factory: \PeckaDesk\Dashboard\Issues\Forms\AddFormFactory
+
+	-
+		factory: \PeckaDesk\Dashboard\Issues\Forms\EditFormFactory
+
+	-
+		factory: \PeckaDesk\Dashboard\Projects\Forms\AddFormFactory
+
+	-
+		factory: \PeckaDesk\Dashboard\Issues\Model\IssueFacade
+
+	-
+		factory: \PeckaDesk\Dashboard\Projects\Model\ProjectFacade
