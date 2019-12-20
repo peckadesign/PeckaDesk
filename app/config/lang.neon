@@ -6,3 +6,33 @@ parameters:
 		projects: Projekty
 		addIssue: Přidat issue
 		add: Přidat
+		detail: Detail
+
+		# datagrid
+		ublaboo_datagrid.no_item_found_reset: Žádné položky nenelezeny. Můžete zkusit vymazat filtr
+		ublaboo_datagrid.no_item_found: Žádné položky nenelezeny.
+		ublaboo_datagrid.here: zde
+		ublaboo_datagrid.items: Položky
+		ublaboo_datagrid.all: vše
+		ublaboo_datagrid.from: od
+		ublaboo_datagrid.reset_filter: Vymazat filtr
+		ublaboo_datagrid.group_actions: Skupinové akce
+		ublaboo_datagrid.show: Zobrazit
+		ublaboo_datagrid.add: Přidat
+		ublaboo_datagrid.edit: Upravit
+		ublaboo_datagrid.show_all_columns: Zobrazit všechny sloupce
+		ublaboo_datagrid.show_default_columns: Zobrazit výchozí sloupce
+		ublaboo_datagrid.hide_column: Skrý sloupec
+		ublaboo_datagrid.action: Akce
+		ublaboo_datagrid.previous: Předchozí
+		ublaboo_datagrid.next: Následující
+		ublaboo_datagrid.choose: Vybrat
+		ublaboo_datagrid.choose_input_required: Group action text not allow empty value
+		ublaboo_datagrid.execute: Spustit
+		ublaboo_datagrid.save: Uložit
+		ublaboo_datagrid.cancel: Storno
+		ublaboo_datagrid.multiselect_choose: Vyberte
+		ublaboo_datagrid.multiselect_selected: "{0} vybráno"
+		ublaboo_datagrid.filter_submit_button: Filtrovat
+		ublaboo_datagrid.show_filter: Zobrazit filtr
+		ublaboo_datagrid.perPage_submit: Změnit
