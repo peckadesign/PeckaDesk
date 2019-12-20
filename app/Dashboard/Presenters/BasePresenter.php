@@ -43,10 +43,13 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
 			$selected = $selected->getParent();
 		}
 
+		$title = $navigation->getSelected()->getLabel();
+
 		$this
 			->template
 			->add('menu', $navigation->getChild(':Dashboard:Projects:List:default'))
 			->add('breadcrumb', $breadcrumb)
+			->add('title', $title)
 		;
 	}
 
