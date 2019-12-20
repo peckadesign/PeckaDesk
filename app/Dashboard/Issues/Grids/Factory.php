@@ -7,16 +7,19 @@ final class Factory
 
 	private \PeckaDesk\Dashboard\Grids\BaseFactory $baseFactory;
 
-	private \Doctrine\ORM\EntityManagerInterface $entityManager;
+	/**
+	 * @var \PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface
+	 */
+	private \PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade;
 
 
 	public function __construct(
 		\PeckaDesk\Dashboard\Grids\BaseFactory $baseFactory,
-		\Doctrine\ORM\EntityManagerInterface $entityManager
+		\PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade
 	)
 	{
 		$this->baseFactory = $baseFactory;
-		$this->entityManager = $entityManager;
+		$this->issueFacade = $issueFacade;
 	}
 
 
@@ -24,11 +27,7 @@ final class Factory
 	{
 		$dataGrid = $this->baseFactory->create();
 
-		$qb = $this->entityManager->createQueryBuilder();
-		$qb->select('i')->from(\PeckaDesk\Model\Issues\Issue::class, 'i');
-		$qb->where('i.project = ?1');
-		$qb->setParameter(1, $project);
-		$source = new \Ublaboo\DataGrid\DataSource\DoctrineDataSource($qb, 'id');
+		$source = new \Ublaboo\DataGrid\DataSource\DoctrineDataSource($this->issueFacade->queryFactory($project), 'id');
 		$dataGrid->setDataSource($source);
 
 		$dataGrid->addColumnText('name', 'name');

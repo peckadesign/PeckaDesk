@@ -45,4 +45,24 @@ final class IssueFacade implements IssueFacadeInterface
 		$this->entityManager->flush();
 	}
 
+
+	public function queryFactory(\PeckaDesk\Model\Projects\Project $project): \Doctrine\ORM\QueryBuilder
+	{
+		$qb = $this->entityManager->createQueryBuilder();
+		$qb->select('i')->from(\PeckaDesk\Model\Issues\Issue::class, 'i');
+
+		$qb->where('i.project = ?1');
+		$qb->setParameter(1, $project);
+
+		return $qb;
+	}
+
+
+	public function fetchAll(\PeckaDesk\Model\Projects\Project $project): array
+	{
+		$qb = $this->queryFactory($project);
+
+		return $qb->getQuery()->getResult();
+	}
+
 }

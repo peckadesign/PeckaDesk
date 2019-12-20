@@ -3,3 +3,6 @@ parameters:
 		name: Název
 		saved: Uloženo
 		edit: Upravit
+		projects: Projekty
+		addIssue: Přidat issue
+		add: Přidat

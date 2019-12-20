@@ -95,3 +95,6 @@ services:
 
 	-
 		factory: \PeckaDesk\Dashboard\Projects\Model\ProjectFacade
+
+	-
+		factory: \PeckaDesk\Dashboard\Navigation\Factory

@@ -16,4 +16,13 @@ interface ProjectFacadeInterface
 
 	public function saveFromAddForm(\PeckaDesk\Dashboard\Projects\Forms\AddFormValues $addFormValues): \PeckaDesk\Model\Projects\Project;
 
+
+	public function queryFactory(): \Doctrine\ORM\QueryBuilder;
+
+
+	/**
+	 * @return array<\PeckaDesk\Model\Projects\Project>
+	 */
+	public function fetchAll(): array;
+
 }

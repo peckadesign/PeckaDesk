@@ -42,9 +42,27 @@ final class ProjectFacade implements ProjectFacadeInterface
 	public function saveFromAddForm(\PeckaDesk\Dashboard\Projects\Forms\AddFormValues $addFormValues): \PeckaDesk\Model\Projects\Project
 	{
 		$project = new \PeckaDesk\Model\Projects\Project($addFormValues->name);
+		$this->entityManager->persist($project);
 		$this->entityManager->flush();
 
 		return $project;
+	}
+
+
+	public function queryFactory(): \Doctrine\ORM\QueryBuilder
+	{
+		$qb = $this->entityManager->createQueryBuilder();
+		$qb->select('p')->from(\PeckaDesk\Model\Projects\Project::class, 'p');
+
+		return $qb;
+	}
+
+
+	public function fetchAll(): array
+	{
+		$qb = $this->queryFactory();
+
+		return $qb->getQuery()->getResult();
 	}
 
 }

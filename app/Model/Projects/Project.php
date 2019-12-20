@@ -14,7 +14,7 @@ class Project
 	 * @\Doctrine\ORM\Mapping\Column(type="integer")
 	 * @\Doctrine\ORM\Mapping\GeneratedValue
 	 */
-	private ?int $id;
+	private ?int $id = NULL;
 
 	/**
 	 * @\Doctrine\ORM\Mapping\Column(type="string")
