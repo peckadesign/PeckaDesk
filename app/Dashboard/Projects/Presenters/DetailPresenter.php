@@ -17,6 +17,7 @@ final class DetailPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresente
 		\PeckaDesk\Dashboard\Projects\Model\ProjectFacadeInterface $projectFacade
 	)
 	{
+		parent::__construct();
 		$this->issueGridFactory = $issueGridFactory;
 		$this->projectFacade = $projectFacade;
 	}

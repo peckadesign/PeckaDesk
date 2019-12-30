@@ -14,6 +14,7 @@ final class DetailPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresente
 		\PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade
 	)
 	{
+		parent::__construct();
 		$this->issueFacade = $issueFacade;
 	}
 

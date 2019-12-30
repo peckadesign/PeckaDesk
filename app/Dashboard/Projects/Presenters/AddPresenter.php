@@ -15,6 +15,7 @@ final class AddPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresenter
 		\PeckaDesk\Dashboard\Projects\Model\ProjectFacadeInterface $projectFacade
 	)
 	{
+		parent::__construct();
 		$this->formFactory = $formFactory;
 		$this->projectFacade = $projectFacade;
 	}

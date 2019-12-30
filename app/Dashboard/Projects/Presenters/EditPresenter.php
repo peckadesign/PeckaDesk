@@ -17,6 +17,7 @@ final class EditPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresenter
 		\PeckaDesk\Dashboard\Projects\Model\ProjectFacadeInterface $projectFacade
 	)
 	{
+		parent::__construct();
 		$this->formFactory = $formFactory;
 		$this->projectFacade = $projectFacade;
 	}
@@ -26,11 +27,7 @@ final class EditPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresenter
 	{
 		$this->project = $project;
 
-		$form = $this['form'];
-		if ( ! $form instanceof \Nette\Application\UI\Form) {
-			throw new \RuntimeException();
-		}
-		$form->setDefaults(\PeckaDesk\Dashboard\Projects\Forms\EditFormValues::createFromProject($this->project));
+		$this['form']->setDefaults(\PeckaDesk\Dashboard\Projects\Forms\EditFormValues::createFromProject($this->project));
 	}
 
 

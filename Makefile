@@ -17,4 +17,4 @@ cs:
 
 
 phpstan:
-	vendor/bin/phpstan analyse --level=7 app/
+	vendor/bin/phpstan analyse -c tests/phpstan.neon --level=7 app/

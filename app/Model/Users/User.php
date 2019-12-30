@@ -99,13 +99,13 @@ class User implements \Nette\Security\IIdentity
 
 	public function getPeckanotesToken(): ?\League\OAuth2\Client\Token\AccessToken
 	{
-		return $this->peckanotesToken ? new \League\OAuth2\Client\Token\AccessToken(\Nette\Utils\Json::decode($this->peckanotesToken)) : NULL;
+		return $this->peckanotesToken !== NULL ? new \League\OAuth2\Client\Token\AccessToken(\Nette\Utils\Json::decode($this->peckanotesToken)) : NULL;
 	}
 
 
 	public function setPeckanotesToken(?\League\OAuth2\Client\Token\AccessTokenInterface $accessToken): void
 	{
-		$this->peckanotesToken = $accessToken ? \Nette\Utils\Json::encode($accessToken) : NULL;
+		$this->peckanotesToken = $accessToken !== NULL ? \Nette\Utils\Json::encode($accessToken) : NULL;
 	}
 
 

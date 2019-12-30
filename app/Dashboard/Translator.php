@@ -21,7 +21,7 @@ final class Translator implements \Nette\Localization\ITranslator
 
 
 	/**
-	 * @param string $message
+	 * @param mixed $message
 	 * @param mixed ...$parameters
 	 */
 	public function translate($message, ...$parameters): string

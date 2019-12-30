@@ -49,7 +49,7 @@ final class PersistentLoginFacade implements PersistentLoginFacadeInterface
 	public function tryAuthenticate(\Nette\Http\IRequest $request, \Nette\Security\User $user): void
 	{
 		$cookie = $request->getCookie('persistentLogin');
-		if ( ! $cookie) {
+		if ($cookie === NULL) {
 			return;
 		}
 

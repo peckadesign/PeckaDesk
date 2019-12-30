@@ -72,7 +72,7 @@ final class Node
 	 */
 	public function getChildren(): array
 	{
-		return \array_filter($this->children, static function (Node $node) {
+		return \array_filter($this->children, static function (Node $node): bool {
 			return $node->isAllowed();
 		});
 	}
@@ -167,7 +167,7 @@ final class Node
 	private function setActive(bool $active): void
 	{
 		$this->active = $active;
-		if ($this->parent && $active) {
+		if ($this->parent !== NULL && $active) {
 			$this->parent->setActive($active);
 		}
 	}
@@ -247,7 +247,7 @@ final class Node
 			return $this;
 		}
 
-		if ( ! $this->active && $this->parent) {
+		if ( $this->active === FALSE && $this->parent !== NULL) {
 			return $this->parent->getSelected();
 		}
 

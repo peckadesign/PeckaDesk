@@ -7,9 +7,6 @@ final class RouterFactory
 
 	private \PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade;
 
-	/**
-	 * @var \PeckaDesk\Dashboard\Projects\Model\ProjectFacadeInterface
-	 */
 	private \PeckaDesk\Dashboard\Projects\Model\ProjectFacadeInterface $projectFacade;
 
 
@@ -31,7 +28,7 @@ final class RouterFactory
 			'presenter' => 'Dashboard:Issues:Add',
 			'action' => 'default',
 			NULL => [
-				\Nette\Routing\Route::FILTER_OUT => static function (array $params) {
+				\Nette\Routing\Route::FILTER_OUT => static function (array $params): ?array {
 					if ( ! isset($params['project'])) {
 						return NULL;
 					}
@@ -41,7 +38,7 @@ final class RouterFactory
 
 					return $params;
 				},
-				\Nette\Routing\Route::FILTER_IN => function (array $params) {
+				\Nette\Routing\Route::FILTER_IN => function (array $params): array {
 					$params['project'] = $this->projectFacade->getById((int) $params['projectId']);
 					unset($params['projectId']);
 
@@ -65,7 +62,7 @@ final class RouterFactory
 
 					return $params;
 				},
-				\Nette\Routing\Route::FILTER_IN => function (array $params) {
+				\Nette\Routing\Route::FILTER_IN => function (array $params): array {
 					$params['issue'] = $this->issueFacade->getById((int) $params['id']);
 					unset($params['projectId']);
 					unset($params['id']);
@@ -90,7 +87,7 @@ final class RouterFactory
 
 					return $params;
 				},
-				\Nette\Routing\Route::FILTER_IN => function (array $params) {
+				\Nette\Routing\Route::FILTER_IN => function (array $params): array {
 					$params['issue'] = $this->issueFacade->getById((int) $params['id']);
 					unset($params['projectId']);
 					unset($params['id']);
@@ -104,7 +101,7 @@ final class RouterFactory
 			'presenter' => 'Dashboard:Projects:Edit',
 			'action' => 'default',
 			NULL => [
-				\Nette\Routing\Route::FILTER_OUT => static function (array $params) {
+				\Nette\Routing\Route::FILTER_OUT => static function (array $params): ?array {
 					if ( ! isset($params['project'])) {
 						return NULL;
 					}
@@ -114,7 +111,7 @@ final class RouterFactory
 
 					return $params;
 				},
-				\Nette\Routing\Route::FILTER_IN => function (array $params) {
+				\Nette\Routing\Route::FILTER_IN => function (array $params): array {
 					$params['project'] = $this->projectFacade->getById((int) $params['id']);
 					unset($params['id']);
 
@@ -127,7 +124,7 @@ final class RouterFactory
 			'presenter' => 'Dashboard:Projects:Detail',
 			'action' => 'default',
 			NULL => [
-				\Nette\Routing\Route::FILTER_OUT => static function (array $params) {
+				\Nette\Routing\Route::FILTER_OUT => static function (array $params): ?array {
 					if ( ! isset($params['project'])) {
 						return NULL;
 					}
@@ -137,7 +134,7 @@ final class RouterFactory
 
 					return $params;
 				},
-				\Nette\Routing\Route::FILTER_IN => function (array $params) {
+				\Nette\Routing\Route::FILTER_IN => function (array $params): array {
 					$params['project'] = $this->projectFacade->getById((int) $params['id']);
 					unset($params['id']);
 
