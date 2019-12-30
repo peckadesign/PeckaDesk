@@ -12,17 +12,17 @@ extensions:
 console:
     name: PeckaDesk
     version: '1.0'
-    catchExceptions: on
-    autoExit: on
+    catchExceptions: true
+    autoExit: true
     url: http://d.peckadesk.peckadesign.com/
-    lazy: off
+    lazy: false
 
 
 migrations:
     dir: %appDir%/../migrations
     driver: mysql
     dbal: doctrine
-    withDummyData: off
+    withDummyData: false
 
 
 parameters:
@@ -30,7 +30,7 @@ parameters:
 
 application:
 	errorPresenter: Error
-	scanDirs: off
+	scanDirs: false
 	mapping:
 		*: ['PeckaDesk', '*', 'Presenters\*Presenter']
 
