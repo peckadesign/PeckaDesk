@@ -10,10 +10,32 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
 
 	private \PeckaDesk\Dashboard\Navigation\Factory $navigationFactory;
 
+	private \PeckaDesk\Dashboard\Users\PersistentLoginFacadeInterface $persistentLoginFacade;
+
 
 	public function injectNavigationFactory(\PeckaDesk\Dashboard\Navigation\Factory $navigationFactory): void
 	{
 		$this->navigationFactory = $navigationFactory;
+	}
+
+
+	public function injectPersistentLoginFacade(\PeckaDesk\Dashboard\Users\PersistentLoginFacadeInterface $persistentLoginFacade): void
+	{
+		$this->persistentLoginFacade = $persistentLoginFacade;
+	}
+
+
+	protected function startup()
+	{
+		parent::startup();
+
+		if ( ! $this->user->isLoggedIn()) {
+			$this->persistentLoginFacade->tryAuthenticate($this->getHttpRequest(), $this->user);
+		}
+
+		if ( ! $this->user->isLoggedIn()) {
+			$this->redirect(':Dashboard:Login:default', ['backlink' => $this->storeRequest()]);
+		}
 	}
 
 
@@ -51,6 +73,13 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
 			->add('breadcrumb', $breadcrumb)
 			->add('title', $title)
 		;
+	}
+
+
+	public function handleLogout(): void
+	{
+		$this->user->logout();
+		$this->redirect('this');
 	}
 
 }

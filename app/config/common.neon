@@ -1,5 +1,6 @@
 includes:
 	- lang.neon
+	- ../Dashboard/PeckaNotesLogin/peckanoteslogin.neon
 
 
 extensions:
@@ -98,3 +99,15 @@ services:
 
 	-
 		factory: \PeckaDesk\Dashboard\Navigation\Factory
+
+	-
+		factory: \PeckaDesk\Dashboard\Presenters\Forms\LoginFormFactory
+
+	-
+		factory: \PeckaDesk\Dashboard\Users\UserFacade
+
+	nette.authenticator:
+		factory: \PeckaDesk\Dashboard\Users\Authenticator
+
+	-
+		factory: \PeckaDesk\Dashboard\Users\PersistentLoginFacade

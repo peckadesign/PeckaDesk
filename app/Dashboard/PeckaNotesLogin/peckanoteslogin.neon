@@ -1,0 +1,23 @@
+parameters:
+	peckanotesLogin:
+		providerUrl: "https://peckanotes.peckadesign.cz"
+		clientId: ""
+		clientSecret: ""
+
+
+services:
+	-
+		class: \PeckaDesk\Dashboard\PeckaNotesLogin\ProviderFactory
+		arguments:
+			oauth2ProviderUrl: %peckanotesLogin.providerUrl%
+			clientId: %peckanotesLogin.clientId%
+			clientSecret: %peckanotesLogin.clientSecret%
+
+	-
+		class: \PeckaDesk\Dashboard\PeckaNotesLogin\PeckaNotesProvider
+		factory: @\PeckaDesk\Dashboard\PeckaNotesLogin\ProviderFactory::create()
+
+	-
+		class: \PeckaDesk\Dashboard\PeckaNotesLogin\StateStorage
+		arguments:
+			sessionSection: @\Nette\Http\Session::getSection("peckanotesLogin.state")

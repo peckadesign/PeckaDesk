@@ -151,17 +151,15 @@ final class RouterFactory
 			'action' => 'default',
 		]);
 
-		//		$router->addRoute('<presenter [a-z/]+>/<id [0-9]+>[/<action>]', [
-		//			'presenter' => [
-		//				\Nette\Routing\Route::FILTER_IN => static function (string $value): string {
-		//					return \implode(':', \array_map('ucfirst', \explode('/', $value)));
-		//				},
-		//				\Nette\Routing\Route::FILTER_OUT => static function (string $value): string {
-		//					return \strtolower(\str_replace(':', '/', $value));
-		//				},
-		//			],
-		//			'action' => 'default',
-		//		]);
+		$router->addRoute('dashboard/login', [
+			'presenter' => 'Dashboard:Login',
+			'action' => 'default',
+		]);
+
+		$router->addRoute('dashboard/peckanotes/oauth2/authorize', [
+			'presenter' => 'Dashboard:PeckaNotesLogin:Login:OAuth2',
+			'action' => 'authorize',
+		]);
 
 		$router->addRoute('/', [
 			'presenter' => 'Dashboard:Projects:List',

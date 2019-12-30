@@ -7,6 +7,13 @@ parameters:
 		addIssue: Přidat issue
 		add: Přidat
 		detail: Detail
+		login: Přihlaste se
+		signup: Registrujte se
+		loginToAccount: Přihlaste se ke svému účtu
+		email: E-mail
+		settings: Nastavení
+		profile: Profil
+		logout: Odhlásit se
 
 		# datagrid
 		ublaboo_datagrid.no_item_found_reset: Žádné položky nenelezeny. Můžete zkusit vymazat filtr

@@ -9,3 +9,4 @@ includes:
 parameters:
 	autoload_files:
 		- %rootDir%/../../../vendor/autoload.php
+	checkGenericClassInNonGenericObjectType: off
