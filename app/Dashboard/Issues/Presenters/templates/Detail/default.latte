@@ -1,3 +1,16 @@
 {block content}
 
 <h1>{$issue->getName()}</h1>
+
+<div class="row">
+	<div class="col-sm-6 col-md-4">
+		{foreach $issue->getFiles() as $file}
+		<div class="card">
+			<div class="card-header">{$file->getName()}</div>
+			<div class="card-body">
+				<img src="{plink :Dashboard:File:default $file}" class="img-thumbnail">
+			</div>
+		</div>
+		{/foreach}
+	</div>
+</div>

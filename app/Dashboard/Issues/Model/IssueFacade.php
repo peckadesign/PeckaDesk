@@ -7,12 +7,19 @@ final class IssueFacade implements IssueFacadeInterface
 
 	private \Doctrine\ORM\EntityManagerInterface $entityManager;
 
+	/**
+	 * @var \PeckaDesk\Model\Files\FileStorageInterface
+	 */
+	private \PeckaDesk\Model\Files\FileStorageInterface $fileStorage;
+
 
 	public function __construct(
-		\Doctrine\ORM\EntityManagerInterface $entityManager
+		\Doctrine\ORM\EntityManagerInterface $entityManager,
+		\PeckaDesk\Model\Files\FileStorageInterface $fileStorage
 	)
 	{
 		$this->entityManager = $entityManager;
+		$this->fileStorage = $fileStorage;
 	}
 
 
@@ -32,8 +39,20 @@ final class IssueFacade implements IssueFacadeInterface
 	public function saveFromAddForm(\PeckaDesk\Model\Projects\Project $project, \PeckaDesk\Dashboard\Issues\Forms\AddFormValues $addFormValues): \PeckaDesk\Model\Issues\Issue
 	{
 		$issue = new \PeckaDesk\Model\Issues\Issue($project, $addFormValues->name);
+		$issue->setDescription($addFormValues->description);
+
 		$this->entityManager->persist($issue);
 		$this->entityManager->flush();
+
+		foreach ($addFormValues->files as $uploadedFile) {
+			$image = \Nette\Utils\Image::fromFile($uploadedFile->getTemporaryFile());
+			$file = new \PeckaDesk\Model\Files\Image($uploadedFile->name, $image->getWidth(), $image->getHeight());
+			$issue->addFile($file);
+			$this->entityManager->persist($file);
+			$this->entityManager->flush();
+			$this->fileStorage->save($file, $uploadedFile);
+		}
+
 
 		return $issue;
 	}

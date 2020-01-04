@@ -12,6 +12,10 @@ version: '3'
 #    environment:
 #      COMPOSER_AUTH: '{"github-oauth": {"github.com": ""}}' #https://github.com/settings/tokens/new?scopes=repo&description=COMPOSER_AUTH_TOKEN
 
+#  minio:
+#  volumes:
+#    - ./minio:/data
+
 
 #networks:
 #  default:

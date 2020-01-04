@@ -14,6 +14,8 @@ parameters:
 		settings: Nastavení
 		profile: Profil
 		logout: Odhlásit se
+		description: Popis
+		files: Soubory
 
 		# datagrid
 		ublaboo_datagrid.no_item_found_reset: Žádné položky nenelezeny. Můžete zkusit vymazat filtr

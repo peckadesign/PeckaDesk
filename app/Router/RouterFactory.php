@@ -9,14 +9,18 @@ final class RouterFactory
 
 	private \PeckaDesk\Dashboard\Projects\Model\ProjectFacadeInterface $projectFacade;
 
+	private \PeckaDesk\Dashboard\Files\Model\FileFacadeInterface $fileFacade;
+
 
 	public function __construct(
 		\PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade,
-		\PeckaDesk\Dashboard\Projects\Model\ProjectFacadeInterface $projectFacade
+		\PeckaDesk\Dashboard\Projects\Model\ProjectFacadeInterface $projectFacade,
+		\PeckaDesk\Dashboard\Files\Model\FileFacadeInterface $fileFacade
 	)
 	{
 		$this->issueFacade = $issueFacade;
 		$this->projectFacade = $projectFacade;
+		$this->fileFacade = $fileFacade;
 	}
 
 
@@ -136,6 +140,29 @@ final class RouterFactory
 				},
 				\Nette\Routing\Route::FILTER_IN => function (array $params): array {
 					$params['project'] = $this->projectFacade->getById((int) $params['id']);
+					unset($params['id']);
+
+					return $params;
+				},
+			],
+		]);
+
+		$router->addRoute('dashboard/files/<id [0-9]+>', [
+			'presenter' => 'Dashboard:File',
+			'action' => 'default',
+			NULL => [
+				\Nette\Routing\Route::FILTER_OUT => static function (array $params): ?array {
+					if ( ! isset($params['file'])) {
+						return NULL;
+					}
+
+					$params['id'] = $params['file']->getId();
+					unset($params['file']);
+
+					return $params;
+				},
+				\Nette\Routing\Route::FILTER_IN => function (array $params): array {
+					$params['file'] = $this->fileFacade->getById((int) $params['id']);
 					unset($params['id']);
 
 					return $params;

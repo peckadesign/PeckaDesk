@@ -111,3 +111,21 @@ services:
 
 	-
 		factory: \PeckaDesk\Dashboard\Users\PersistentLoginFacade
+
+	-
+		factory: \Aws\S3\S3Client
+		arguments:
+			-
+				credentials:
+					key: %s3.key%
+					secret: %s3.secret%
+				version: latest
+				region: us-west-2
+				endpoint: %s3.endpoint%
+				use_path_style_endpoint: true
+
+	-
+		factory: \PeckaDesk\Model\Files\S3FileStorage
+
+	-
+		factory: \PeckaDesk\Dashboard\Files\Model\FileFacade

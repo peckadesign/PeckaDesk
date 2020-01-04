@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-    image: peckadesign/php:7.4-dev
+    build: .docker/web/
     ports:
       - 80
     volumes:
@@ -16,3 +16,9 @@ services:
     command: install
     volumes:
       - ./:/var/www/html:cached
+
+  minio:
+    image: minio/minio
+    command: server /data
+    ports:
+      - 9001:9000

@@ -22,10 +22,24 @@ class Issue
 	private string $name;
 
 	/**
+	 * @\Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+	 */
+	private ?string $description = NULL;
+
+	/**
 	 * @\Doctrine\ORM\Mapping\ManyToOne(targetEntity="\PeckaDesk\Model\Projects\Project")
 	 * @\Doctrine\ORM\Mapping\JoinColumn(name="project_id", referencedColumnName="id")
 	 */
 	private \PeckaDesk\Model\Projects\Project $project;
+
+	/**
+	 * @\Doctrine\ORM\Mapping\ManyToMany(targetEntity="\PeckaDesk\Model\Files\File")
+	 * @\Doctrine\ORM\Mapping\JoinTable(name="issue_x_file",
+	 *     joinColumns={@\Doctrine\ORM\Mapping\JoinColumn(name="issue_id", referencedColumnName="id")},
+	 *     inverseJoinColumns={@\Doctrine\ORM\Mapping\JoinColumn(name="file_id", referencedColumnName="id")}
+	 * )
+	 */
+	private \Doctrine\Common\Collections\Collection $files;
 
 
 	public function __construct(
@@ -35,6 +49,7 @@ class Issue
 	{
 		$this->project = $project;
 		$this->name = $name;
+		$this->files = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 
@@ -59,6 +74,30 @@ class Issue
 	public function setName(string $name): void
 	{
 		$this->name = $name;
+	}
+
+
+	public function getDescription(): ?string
+	{
+		return $this->description;
+	}
+
+
+	public function setDescription(?string $description): void
+	{
+		$this->description = \PeckaDesk\Model\Filters::stringVal($description);
+	}
+
+
+	public function addFile(\PeckaDesk\Model\Files\File $file): void
+	{
+		$this->files->add($file);
+	}
+
+
+	public function getFiles(): \Doctrine\Common\Collections\Collection
+	{
+		return $this->files;
 	}
 
 }

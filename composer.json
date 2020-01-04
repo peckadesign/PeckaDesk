@@ -27,7 +27,8 @@
 		"symfony/console": "4.4.*",
 		"contributte/console": "0.7.*",
 		"nextras/migrations": "3.1.*",
-		"league/oauth2-client": "^2.4"
+		"league/oauth2-client": "^2.4",
+		"aws/aws-sdk-php": "^3.130"
 	},
 	"require-dev": {
 		"nette/tester": "^2.0",
