@@ -42,8 +42,12 @@ final class RouterFactory
 
 					return $params;
 				},
-				\Nette\Routing\Route::FILTER_IN => function (array $params): array {
-					$params['project'] = $this->projectFacade->getById((int) $params['projectId']);
+				\Nette\Routing\Route::FILTER_IN => function (array $params): ?array {
+					try {
+						$params['project'] = $this->projectFacade->getById((int) $params['projectId']);
+					} catch (\PeckaDesk\Dashboard\Model\EntityNotFoundException $e) {
+						return NULL;
+					}
 					unset($params['projectId']);
 
 					return $params;
@@ -66,8 +70,12 @@ final class RouterFactory
 
 					return $params;
 				},
-				\Nette\Routing\Route::FILTER_IN => function (array $params): array {
-					$params['issue'] = $this->issueFacade->getById((int) $params['id']);
+				\Nette\Routing\Route::FILTER_IN => function (array $params): ?array {
+					try {
+						$params['issue'] = $this->issueFacade->getById((int) $params['id']);
+					} catch (\PeckaDesk\Dashboard\Model\EntityNotFoundException $e) {
+						return NULL;
+					}
 					unset($params['projectId']);
 					unset($params['id']);
 
@@ -91,8 +99,12 @@ final class RouterFactory
 
 					return $params;
 				},
-				\Nette\Routing\Route::FILTER_IN => function (array $params): array {
-					$params['issue'] = $this->issueFacade->getById((int) $params['id']);
+				\Nette\Routing\Route::FILTER_IN => function (array $params): ?array {
+					try {
+						$params['issue'] = $this->issueFacade->getById((int) $params['id']);
+					} catch (\PeckaDesk\Dashboard\Model\EntityNotFoundException $e) {
+						return NULL;
+					}
 					unset($params['projectId']);
 					unset($params['id']);
 
@@ -115,8 +127,12 @@ final class RouterFactory
 
 					return $params;
 				},
-				\Nette\Routing\Route::FILTER_IN => function (array $params): array {
-					$params['project'] = $this->projectFacade->getById((int) $params['id']);
+				\Nette\Routing\Route::FILTER_IN => function (array $params): ?array {
+					try {
+						$params['project'] = $this->projectFacade->getById((int) $params['id']);
+					} catch (\PeckaDesk\Dashboard\Model\EntityNotFoundException $e) {
+						return NULL;
+					}
 					unset($params['id']);
 
 					return $params;
@@ -138,8 +154,12 @@ final class RouterFactory
 
 					return $params;
 				},
-				\Nette\Routing\Route::FILTER_IN => function (array $params): array {
-					$params['project'] = $this->projectFacade->getById((int) $params['id']);
+				\Nette\Routing\Route::FILTER_IN => function (array $params): ?array {
+					try {
+						$params['project'] = $this->projectFacade->getById((int) $params['id']);
+					} catch (\PeckaDesk\Dashboard\Model\EntityNotFoundException $e) {
+						return NULL;
+					}
 					unset($params['id']);
 
 					return $params;
@@ -161,8 +181,12 @@ final class RouterFactory
 
 					return $params;
 				},
-				\Nette\Routing\Route::FILTER_IN => function (array $params): array {
-					$params['file'] = $this->fileFacade->getById((int) $params['id']);
+				\Nette\Routing\Route::FILTER_IN => function (array $params): ?array {
+					try {
+						$params['file'] = $this->fileFacade->getById((int) $params['id']);
+					} catch (\PeckaDesk\Dashboard\Model\EntityNotFoundException $e) {
+						return NULL;
+					}
 					unset($params['id']);
 
 					return $params;

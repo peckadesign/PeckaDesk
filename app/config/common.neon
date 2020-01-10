@@ -129,3 +129,6 @@ services:
 
 	-
 		factory: \PeckaDesk\Dashboard\Files\Model\FileFacade
+
+	-
+		factory: \PeckaDesk\Model\CurrentDateTimeProvider

@@ -22,11 +22,6 @@ class Issue
 	private string $name;
 
 	/**
-	 * @\Doctrine\ORM\Mapping\Column(type="string", nullable=true)
-	 */
-	private ?string $description = NULL;
-
-	/**
 	 * @\Doctrine\ORM\Mapping\ManyToOne(targetEntity="\PeckaDesk\Model\Projects\Project")
 	 * @\Doctrine\ORM\Mapping\JoinColumn(name="project_id", referencedColumnName="id")
 	 */
@@ -41,6 +36,12 @@ class Issue
 	 */
 	private \Doctrine\Common\Collections\Collection $files;
 
+	/**
+	 * @\Doctrine\ORM\Mapping\OneToMany(targetEntity="\PeckaDesk\Model\Issues\Comment", mappedBy="issue")
+	 * @\Doctrine\ORM\Mapping\OrderBy({"created" = "DESC"})
+	 */
+	private \Doctrine\Common\Collections\Collection $comments;
+
 
 	public function __construct(
 		\PeckaDesk\Model\Projects\Project $project,
@@ -49,7 +50,20 @@ class Issue
 	{
 		$this->project = $project;
 		$this->name = $name;
+		$this->comments = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->files = new \Doctrine\Common\Collections\ArrayCollection();
+	}
+
+
+	public function addComment(Comment $comment): void
+	{
+		$this->comments->add($comment);
+	}
+
+
+	public function getComment(): Comment
+	{
+		return $this->comments->first();
 	}
 
 
@@ -79,13 +93,7 @@ class Issue
 
 	public function getDescription(): ?string
 	{
-		return $this->description;
-	}
-
-
-	public function setDescription(?string $description): void
-	{
-		$this->description = \PeckaDesk\Model\Filters::stringVal($description);
+		return $this->getCurrentRevision()->getText();
 	}
 
 
@@ -98,6 +106,12 @@ class Issue
 	public function getFiles(): \Doctrine\Common\Collections\Collection
 	{
 		return $this->files;
+	}
+
+
+	private function getCurrentRevision(): Revision
+	{
+		return $this->getComment()->getCurrentRevision();
 	}
 
 }

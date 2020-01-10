@@ -4,6 +4,7 @@ parameters:
 		saved: Uloženo
 		edit: Upravit
 		projects: Projekty
+		project: Projekt
 		addIssue: Přidat issue
 		add: Přidat
 		detail: Detail

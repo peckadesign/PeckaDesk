@@ -38,7 +38,7 @@ final class EditPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresenter
 		$form->addSubmit('save', 'save')->onClick[] = function (\Nette\Forms\Controls\SubmitButton $button) use ($form): void {
 			/** @var \PeckaDesk\Dashboard\Issues\Forms\EditFormValues $values */
 			$values = $form->getValues(\PeckaDesk\Dashboard\Issues\Forms\EditFormValues::class);
-			$this->issueFacade->saveFromEditForm($this->issue, $values);
+			$this->issueFacade->saveFromEditForm($this->user->getIdentity(), $this->issue, $values);
 			$this->flashMessage('saved', 'success');
 			$this->redirect('this');
 		};

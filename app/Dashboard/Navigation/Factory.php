@@ -34,6 +34,13 @@ final class Factory
 		$nodeProjects->setSelected($presenter instanceof \PeckaDesk\Dashboard\Projects\Presenters\ListPresenter);
 		$navigation->addChild($nodeProjects);
 
+		$addProject = new Node();
+		$addProject->setLabel('add');
+		$addProject->setLink(':Dashboard:Projects:Add', 'default');
+		$addProject->setAllowed(TRUE);
+		$addProject->setSelected($presenter instanceof \PeckaDesk\Dashboard\Projects\Presenters\AddPresenter);
+		$nodeProjects->addChild($addProject);
+
 		foreach ($this->projectFacade->fetchAll() as $project) {
 			$nodeProject = new Node();
 			$nodeProject->setLabel($project->getName());

@@ -7,19 +7,27 @@ final class IssueFacade implements IssueFacadeInterface
 
 	private \Doctrine\ORM\EntityManagerInterface $entityManager;
 
-	/**
-	 * @var \PeckaDesk\Model\Files\FileStorageInterface
-	 */
 	private \PeckaDesk\Model\Files\FileStorageInterface $fileStorage;
+
+	private \PeckaDesk\Model\DateTimeProviderInterface $dateTimeProvider;
+
+	/**
+	 * @var \PeckaDesk\Dashboard\Users\UserFacadeInterface
+	 */
+	private \PeckaDesk\Dashboard\Users\UserFacadeInterface $userFacade;
 
 
 	public function __construct(
 		\Doctrine\ORM\EntityManagerInterface $entityManager,
-		\PeckaDesk\Model\Files\FileStorageInterface $fileStorage
+		\PeckaDesk\Model\Files\FileStorageInterface $fileStorage,
+		\PeckaDesk\Model\DateTimeProviderInterface $dateTimeProvider,
+		\PeckaDesk\Dashboard\Users\UserFacadeInterface $userFacade
 	)
 	{
 		$this->entityManager = $entityManager;
 		$this->fileStorage = $fileStorage;
+		$this->dateTimeProvider = $dateTimeProvider;
+		$this->userFacade = $userFacade;
 	}
 
 
@@ -36,12 +44,19 @@ final class IssueFacade implements IssueFacadeInterface
 	}
 
 
-	public function saveFromAddForm(\PeckaDesk\Model\Projects\Project $project, \PeckaDesk\Dashboard\Issues\Forms\AddFormValues $addFormValues): \PeckaDesk\Model\Issues\Issue
+	public function saveFromAddForm(\PeckaDesk\Model\Users\User $createdBy, \PeckaDesk\Model\Projects\Project $project, \PeckaDesk\Dashboard\Issues\Forms\AddFormValues $addFormValues): \PeckaDesk\Model\Issues\Issue
 	{
+		$now = $this->dateTimeProvider->createDateTime();
+
+		$createdBy = $this->userFacade->getByEmail($createdBy->getEmail());
+
 		$issue = new \PeckaDesk\Model\Issues\Issue($project, $addFormValues->name);
-		$issue->setDescription($addFormValues->description);
+		$comment = new \PeckaDesk\Model\Issues\Comment($issue, $createdBy, $now);
+		$revision = new \PeckaDesk\Model\Issues\Revision($comment, $addFormValues->description, $createdBy, $now);
 
 		$this->entityManager->persist($issue);
+		$this->entityManager->persist($comment);
+		$this->entityManager->persist($revision);
 		$this->entityManager->flush();
 
 		foreach ($addFormValues->files as $uploadedFile) {
@@ -53,14 +68,20 @@ final class IssueFacade implements IssueFacadeInterface
 			$this->fileStorage->save($file, $uploadedFile);
 		}
 
-
 		return $issue;
 	}
 
 
-	public function saveFromEditForm(\PeckaDesk\Model\Issues\Issue $issue, \PeckaDesk\Dashboard\Issues\Forms\EditFormValues $addFormValues): void
+	public function saveFromEditForm(\PeckaDesk\Model\Users\User $createdBy, \PeckaDesk\Model\Issues\Issue $issue, \PeckaDesk\Dashboard\Issues\Forms\EditFormValues $addFormValues): void
 	{
-		$issue->setName($addFormValues->name);
+		$now = $this->dateTimeProvider->createDateTime();
+
+		$createdBy = $this->userFacade->getByEmail($createdBy->getEmail());
+
+		$revision = new \PeckaDesk\Model\Issues\Revision($issue->getComment(), $addFormValues->description, $createdBy, $now);
+		$issue->getComment()->addRevision($revision);
+
+		$this->entityManager->persist($revision);
 		$this->entityManager->flush();
 	}
 

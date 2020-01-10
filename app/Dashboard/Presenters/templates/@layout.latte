@@ -26,7 +26,7 @@
 	<ul class="c-sidebar-nav">
 		<li class="c-sidebar-nav-title">{$menu->getLabel()|translate}</li>
 		{foreach $menu->getChildren() as $node}
-			<li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{plink $node->getLink(), (expand) $node->getParameters()}">{$node->getLabel()}<span class="badge badge-info">{$node->getBadge()}</span></a></li>
+			<li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{plink $node->getLink(), (expand) $node->getParameters()}">{$node->getLabel()|translate}<span class="badge badge-info">{$node->getBadge()}</span></a></li>
 		{/foreach}
 	</ul>
 	<button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
