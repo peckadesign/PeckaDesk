@@ -16,4 +16,16 @@ trait CreatedTrait
 	 */
 	private \DateTimeImmutable $created;
 
+
+	public function getCreatedBy(): Users\User
+	{
+		return $this->createdBy;
+	}
+
+
+	public function getCreated(): \DateTimeImmutable
+	{
+		return $this->created;
+	}
+
 }

@@ -30,6 +30,15 @@ class Comment
 	 */
 	private \Doctrine\Common\Collections\Collection $revisions;
 
+	/**
+	 * @\Doctrine\ORM\Mapping\ManyToMany(targetEntity="\PeckaDesk\Model\Files\File")
+	 * @\Doctrine\ORM\Mapping\JoinTable(name="comment_x_file",
+	 *     joinColumns={@\Doctrine\ORM\Mapping\JoinColumn(name="comment_id", referencedColumnName="id")},
+	 *     inverseJoinColumns={@\Doctrine\ORM\Mapping\JoinColumn(name="file_id", referencedColumnName="id")}
+	 * )
+	 */
+	private \Doctrine\Common\Collections\Collection $files;
+
 
 	public function __construct(
 		Issue $issue,
@@ -42,6 +51,7 @@ class Comment
 		$this->createdBy = $createdBy;
 		$this->created = $created;
 		$this->revisions = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->files = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 
@@ -53,7 +63,19 @@ class Comment
 
 	public function getCurrentRevision(): Revision
 	{
-		return $this->revisions->first();
+		return $this->revisions->last();
+	}
+
+
+	public function addFile(\PeckaDesk\Model\Files\File $file): void
+	{
+		$this->files->add($file);
+	}
+
+
+	public function getFiles(): \Doctrine\Common\Collections\Collection
+	{
+		return $this->files;
 	}
 
 }

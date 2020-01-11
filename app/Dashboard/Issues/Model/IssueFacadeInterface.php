@@ -17,6 +17,9 @@ interface IssueFacadeInterface
 	public function saveFromEditForm(\PeckaDesk\Model\Users\User $createdBy, \PeckaDesk\Model\Issues\Issue $issue, \PeckaDesk\Dashboard\Issues\Forms\EditFormValues $editFormValues): void;
 
 
+	public function saveReplyForm(\PeckaDesk\Model\Users\User $createdBy, \PeckaDesk\Model\Issues\Issue $issue, \PeckaDesk\Dashboard\Issues\Forms\ReplyFormValues $replyFormValues): \PeckaDesk\Model\Issues\Comment;
+
+
 	public function queryFactory(\PeckaDesk\Model\Projects\Project $project): \Doctrine\ORM\QueryBuilder;
 
 

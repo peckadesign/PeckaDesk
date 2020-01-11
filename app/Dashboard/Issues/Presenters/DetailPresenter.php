@@ -9,13 +9,17 @@ final class DetailPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresente
 
 	private \PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade;
 
+	private \PeckaDesk\Dashboard\Controls\ReplyComment\FactoryInterface $replyCommentControlFactory;
+
 
 	public function __construct(
-		\PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade
+		\PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade,
+		\PeckaDesk\Dashboard\Controls\ReplyComment\FactoryInterface $replyCommentControlFactory
 	)
 	{
 		parent::__construct();
 		$this->issueFacade = $issueFacade;
+		$this->replyCommentControlFactory = $replyCommentControlFactory;
 	}
 
 
@@ -30,6 +34,12 @@ final class DetailPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresente
 		$this
 			->template
 			->add('issue', $this->issue);
+	}
+
+
+	protected function createComponentReply(): \PeckaDesk\Dashboard\Controls\ReplyComment\Control
+	{
+		return $this->replyCommentControlFactory->create($this->issue);
 	}
 
 }

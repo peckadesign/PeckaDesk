@@ -27,10 +27,8 @@ final class EditFormFactory
 			->setRequired(TRUE)
 		;
 
-		$form
-			->addTextArea(self::CONTROL_DESCRIPTION, 'description')
-			->setRequired(FALSE)
-		;
+		$control = DescriptionControlFactory::create();
+		$form->addComponent($control, self::CONTROL_DESCRIPTION);
 
 		$form
 			->addMultiUpload(self::CONTROL_FILES, 'files')

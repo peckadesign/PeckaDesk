@@ -2,15 +2,35 @@
 
 <h1>{$issue->getName()}</h1>
 
-<div class="row">
-	<div class="col-sm-6 col-md-4">
-		{foreach $issue->getFiles() as $file}
-		<div class="card">
-			<div class="card-header">{$file->getName()}</div>
-			<div class="card-body">
-				<img src="{plink :Dashboard:File:default $file}" class="img-thumbnail">
+{foreach $issue->getComments() as $comment}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9">
+				<div class="card">
+					<div class="card-header">{$comment->getCreatedBy()->getFirstName()} {$issue->getCreatedBy()->getLastName()}
+						<span class="float-right">{$comment->getCreated()|datetime}</span>
+					</div>
+					<div class="card-body">
+						<p>{$comment->getCurrentRevision()->getText()}</p>
+					</div>
+				</div>
 			</div>
 		</div>
-		{/foreach}
 	</div>
-</div>
+	<div class="container">
+		<div class="row">
+			{foreach $comment->getFiles() as $file}
+				<div class="col-md-3">
+					<div class="card">
+						<div class="card-header">{$file->getName()}</div>
+						<div class="card-body">
+							<img src="{plink :Dashboard:File:default $file}" class="img-thumbnail">
+						</div>
+					</div>
+				</div>
+			{/foreach}
+		</div>
+	</div>
+{/foreach}
+
+{control reply}

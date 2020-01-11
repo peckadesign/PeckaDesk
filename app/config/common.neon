@@ -132,3 +132,13 @@ services:
 
 	-
 		factory: \PeckaDesk\Model\CurrentDateTimeProvider
+
+	nette.latteFactory:
+		setup:
+			- addFilter('datetime', [\PeckaDesk\Dashboard\Templating\Filters, dateTime])
+
+	-
+		implement: \PeckaDesk\Dashboard\Controls\ReplyComment\FactoryInterface
+
+	-
+		factory: \PeckaDesk\Dashboard\Issues\Forms\ReplyFormFactory

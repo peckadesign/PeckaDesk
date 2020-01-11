@@ -11,15 +11,19 @@ final class EditPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresenter
 
 	private \PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade;
 
+	private \PeckaDesk\Dashboard\Users\UserFacadeInterface $userFacade;
+
 
 	public function __construct(
 		\PeckaDesk\Dashboard\Issues\Forms\EditFormFactory $formFactory,
-		\PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade
+		\PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade,
+		\PeckaDesk\Dashboard\Users\UserFacadeInterface $userFacade
 	)
 	{
 		parent::__construct();
 		$this->formFactory = $formFactory;
 		$this->issueFacade = $issueFacade;
+		$this->userFacade = $userFacade;
 	}
 
 
@@ -38,7 +42,8 @@ final class EditPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresenter
 		$form->addSubmit('save', 'save')->onClick[] = function (\Nette\Forms\Controls\SubmitButton $button) use ($form): void {
 			/** @var \PeckaDesk\Dashboard\Issues\Forms\EditFormValues $values */
 			$values = $form->getValues(\PeckaDesk\Dashboard\Issues\Forms\EditFormValues::class);
-			$this->issueFacade->saveFromEditForm($this->user->getIdentity(), $this->issue, $values);
+			$createdBy = $this->userFacade->getById($this->getPresenter()->getUser()->getId());
+			$this->issueFacade->saveFromEditForm($createdBy, $this->issue, $values);
 			$this->flashMessage('saved', 'success');
 			$this->redirect('this');
 		};

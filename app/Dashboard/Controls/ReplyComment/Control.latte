@@ -1,0 +1,38 @@
+{form reply}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9">
+				<div class="card">
+					<div class="card-header">
+						{='reply'|translate}
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="form-group">
+                                    {label \PeckaDesk\Dashboard\Issues\Forms\AddFormFactory::CONTROL_DESCRIPTION:}
+									<textarea n:name="\PeckaDesk\Dashboard\Issues\Forms\AddFormFactory::CONTROL_DESCRIPTION" class="form-control"
+																															 rows="8"></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="form-group">
+                                    {label \PeckaDesk\Dashboard\Issues\Forms\AddFormFactory::CONTROL_FILES:}
+									<input n:name="\PeckaDesk\Dashboard\Issues\Forms\AddFormFactory::CONTROL_FILES"
+											type="file" multiple>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-footer">
+						<button n:name="save" class="btn btn-sm btn-primary" type="submit">Submit</button>
+						<button class="btn btn-sm btn-danger" type="reset">Reset</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+{/form}

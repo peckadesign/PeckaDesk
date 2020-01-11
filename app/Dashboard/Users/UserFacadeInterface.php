@@ -10,4 +10,7 @@ interface UserFacadeInterface
 
 	public function getByEmail(string $email): \PeckaDesk\Model\Users\User;
 
+
+	public function getById(int $id): \PeckaDesk\Model\Users\User;
+
 }

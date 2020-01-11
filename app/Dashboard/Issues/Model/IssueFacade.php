@@ -50,7 +50,7 @@ final class IssueFacade implements IssueFacadeInterface
 
 		$createdBy = $this->userFacade->getByEmail($createdBy->getEmail());
 
-		$issue = new \PeckaDesk\Model\Issues\Issue($project, $addFormValues->name);
+		$issue = new \PeckaDesk\Model\Issues\Issue($project, $addFormValues->name, $createdBy, $now);
 		$comment = new \PeckaDesk\Model\Issues\Comment($issue, $createdBy, $now);
 		$revision = new \PeckaDesk\Model\Issues\Revision($comment, $addFormValues->description, $createdBy, $now);
 
@@ -62,7 +62,7 @@ final class IssueFacade implements IssueFacadeInterface
 		foreach ($addFormValues->files as $uploadedFile) {
 			$image = \Nette\Utils\Image::fromFile($uploadedFile->getTemporaryFile());
 			$file = new \PeckaDesk\Model\Files\Image($uploadedFile->name, $image->getWidth(), $image->getHeight());
-			$issue->addFile($file);
+			$comment->addFile($file);
 			$this->entityManager->persist($file);
 			$this->entityManager->flush();
 			$this->fileStorage->save($file, $uploadedFile);
@@ -83,6 +83,32 @@ final class IssueFacade implements IssueFacadeInterface
 
 		$this->entityManager->persist($revision);
 		$this->entityManager->flush();
+	}
+
+
+	public function saveReplyForm(\PeckaDesk\Model\Users\User $createdBy, \PeckaDesk\Model\Issues\Issue $issue, \PeckaDesk\Dashboard\Issues\Forms\ReplyFormValues $replyFormValues): \PeckaDesk\Model\Issues\Comment
+	{
+		$now = $this->dateTimeProvider->createDateTime();
+
+		$createdBy = $this->userFacade->getByEmail($createdBy->getEmail());
+
+		$comment = new \PeckaDesk\Model\Issues\Comment($issue, $createdBy, $now);
+		$revision = new \PeckaDesk\Model\Issues\Revision($comment, $replyFormValues->description, $createdBy, $now);
+
+		$this->entityManager->persist($comment);
+		$this->entityManager->persist($revision);
+		$this->entityManager->flush();
+
+		foreach ($replyFormValues->files as $uploadedFile) {
+			$image = \Nette\Utils\Image::fromFile($uploadedFile->getTemporaryFile());
+			$file = new \PeckaDesk\Model\Files\Image($uploadedFile->name, $image->getWidth(), $image->getHeight());
+			$comment->addFile($file);
+			$this->entityManager->persist($file);
+			$this->entityManager->flush();
+			$this->fileStorage->save($file, $uploadedFile);
+		}
+
+		return $comment;
 	}
 
 

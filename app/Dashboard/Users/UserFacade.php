@@ -36,4 +36,18 @@ final class UserFacade implements UserFacadeInterface
 		return $user;
 	}
 
+
+	public function getById(int $id): \PeckaDesk\Model\Users\User
+	{
+		$repository = $this->entityManager->getRepository(\PeckaDesk\Model\Users\User::class);
+
+		$user = $repository->find($id);
+
+		if ( ! $user instanceof \PeckaDesk\Model\Users\User) {
+			throw new \PeckaDesk\Dashboard\Model\EntityNotFoundException();
+		}
+
+		return $user;
+	}
+
 }

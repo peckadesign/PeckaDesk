@@ -9,6 +9,8 @@ namespace PeckaDesk\Model\Issues;
 class Issue
 {
 
+	use \PeckaDesk\Model\CreatedTrait;
+
 	/**
 	 * @\Doctrine\ORM\Mapping\Id
 	 * @\Doctrine\ORM\Mapping\Column(type="integer")
@@ -28,30 +30,24 @@ class Issue
 	private \PeckaDesk\Model\Projects\Project $project;
 
 	/**
-	 * @\Doctrine\ORM\Mapping\ManyToMany(targetEntity="\PeckaDesk\Model\Files\File")
-	 * @\Doctrine\ORM\Mapping\JoinTable(name="issue_x_file",
-	 *     joinColumns={@\Doctrine\ORM\Mapping\JoinColumn(name="issue_id", referencedColumnName="id")},
-	 *     inverseJoinColumns={@\Doctrine\ORM\Mapping\JoinColumn(name="file_id", referencedColumnName="id")}
-	 * )
-	 */
-	private \Doctrine\Common\Collections\Collection $files;
-
-	/**
 	 * @\Doctrine\ORM\Mapping\OneToMany(targetEntity="\PeckaDesk\Model\Issues\Comment", mappedBy="issue")
-	 * @\Doctrine\ORM\Mapping\OrderBy({"created" = "DESC"})
+	 * @\Doctrine\ORM\Mapping\OrderBy({"created" = "ASC"})
 	 */
 	private \Doctrine\Common\Collections\Collection $comments;
 
 
 	public function __construct(
 		\PeckaDesk\Model\Projects\Project $project,
-		string $name
+		string $name,
+		\PeckaDesk\Model\Users\User $createdBy,
+		\DateTimeImmutable $created
 	)
 	{
 		$this->project = $project;
 		$this->name = $name;
 		$this->comments = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->files = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->createdBy = $createdBy;
+		$this->created = $created;
 	}
 
 
@@ -97,15 +93,9 @@ class Issue
 	}
 
 
-	public function addFile(\PeckaDesk\Model\Files\File $file): void
+	public function getComments(): \Doctrine\Common\Collections\Collection
 	{
-		$this->files->add($file);
-	}
-
-
-	public function getFiles(): \Doctrine\Common\Collections\Collection
-	{
-		return $this->files;
+		return $this->comments;
 	}
 
 
