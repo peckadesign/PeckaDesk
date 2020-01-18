@@ -104,7 +104,7 @@ services:
 		factory: \PeckaDesk\Dashboard\Presenters\Forms\LoginFormFactory
 
 	-
-		factory: \PeckaDesk\Dashboard\Users\UserFacade
+		factory: \PeckaDesk\Dashboard\Users\Model\UserFacade
 
 	nette.authenticator:
 		factory: \PeckaDesk\Dashboard\Users\Authenticator
@@ -142,3 +142,12 @@ services:
 
 	-
 		factory: \PeckaDesk\Dashboard\Issues\Forms\ReplyFormFactory
+
+	-
+		factory: \PeckaDesk\Dashboard\Users\Grids\Factory
+
+	-
+		factory: \PeckaDesk\Dashboard\Users\Forms\AddFormFactory
+
+	-
+		factory: \PeckaDesk\Dashboard\Users\Forms\EditFormFactory

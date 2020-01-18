@@ -11,16 +11,20 @@ final class RouterFactory
 
 	private \PeckaDesk\Dashboard\Files\Model\FileFacadeInterface $fileFacade;
 
+	private \PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade;
+
 
 	public function __construct(
 		\PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade,
 		\PeckaDesk\Dashboard\Projects\Model\ProjectFacadeInterface $projectFacade,
-		\PeckaDesk\Dashboard\Files\Model\FileFacadeInterface $fileFacade
+		\PeckaDesk\Dashboard\Files\Model\FileFacadeInterface $fileFacade,
+		\PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade
 	)
 	{
 		$this->issueFacade = $issueFacade;
 		$this->projectFacade = $projectFacade;
 		$this->fileFacade = $fileFacade;
+		$this->userFacade = $userFacade;
 	}
 
 
@@ -207,6 +211,70 @@ final class RouterFactory
 		$router->addRoute('dashboard/peckanotes/oauth2/authorize', [
 			'presenter' => 'Dashboard:PeckaNotesLogin:Login:OAuth2',
 			'action' => 'authorize',
+		]);
+
+		$router->addRoute('dashboard/users', [
+			'presenter' => 'Dashboard:Users:List',
+			'action' => 'default',
+		]);
+
+		$router->addRoute('dashboard/users/add', [
+			'presenter' => 'Dashboard:Users:Add',
+			'action' => 'default',
+		]);
+
+		$router->addRoute('dashboard/users/<id [0-9]+>', [
+			'presenter' => 'Dashboard:Users:Detail',
+			'action' => 'default',
+			NULL => [
+				\Nette\Routing\Route::FILTER_OUT => static function (array $params): ?array {
+					if ( ! isset($params['user'])) {
+						return NULL;
+					}
+
+					$params['id'] = $params['user']->getId();
+					unset($params['user']);
+
+					return $params;
+				},
+				\Nette\Routing\Route::FILTER_IN => function (array $params): ?array {
+					try {
+						$params['user'] = $this->userFacade->getById((int) $params['id']);
+					} catch (\PeckaDesk\Dashboard\Model\EntityNotFoundException $e) {
+						return NULL;
+					}
+					unset($params['id']);
+
+					return $params;
+				},
+			],
+		]);
+
+		$router->addRoute('dashboard/users/<id [0-9]+>/edit', [
+			'presenter' => 'Dashboard:Users:Edit',
+			'action' => 'default',
+			NULL => [
+				\Nette\Routing\Route::FILTER_OUT => static function (array $params): ?array {
+					if ( ! isset($params['user'])) {
+						return NULL;
+					}
+
+					$params['id'] = $params['user']->getId();
+					unset($params['user']);
+
+					return $params;
+				},
+				\Nette\Routing\Route::FILTER_IN => function (array $params): ?array {
+					try {
+						$params['user'] = $this->userFacade->getById((int) $params['id']);
+					} catch (\PeckaDesk\Dashboard\Model\EntityNotFoundException $e) {
+						return NULL;
+					}
+					unset($params['id']);
+
+					return $params;
+				},
+			],
 		]);
 
 		$router->addRoute('/', [

@@ -34,7 +34,7 @@ class User implements \Nette\Security\IIdentity
 	/**
 	 * @\Doctrine\ORM\Mapping\Column(type="string", nullable=TRUE)
 	 */
-	private ?string $peckanotesToken;
+	private ?string $peckanotesToken = NULL;
 
 	/**
 	 * @\Doctrine\ORM\Mapping\OneToMany(targetEntity="\PeckaDesk\Dashboard\Users\PersistentLogin", mappedBy="user", cascade={"ALL"}, indexBy="token")

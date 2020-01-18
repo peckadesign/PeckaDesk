@@ -18,6 +18,11 @@ parameters:
 		description: Popis
 		files: Soubory
 		reply: Odpověď
+		translate: Nastavení
+		users: Uživatelé
+		firstName: Křestní jméno
+		lastName: Příjmení
+		user: Uživatel
 
 		# datagrid
 		ublaboo_datagrid.no_item_found_reset: Žádné položky nenelezeny. Můžete zkusit vymazat filtr

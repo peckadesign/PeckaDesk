@@ -12,16 +12,16 @@ final class IssueFacade implements IssueFacadeInterface
 	private \PeckaDesk\Model\DateTimeProviderInterface $dateTimeProvider;
 
 	/**
-	 * @var \PeckaDesk\Dashboard\Users\UserFacadeInterface
+	 * @var \PeckaDesk\Dashboard\Users\Model\UserFacadeInterface
 	 */
-	private \PeckaDesk\Dashboard\Users\UserFacadeInterface $userFacade;
+	private \PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade;
 
 
 	public function __construct(
 		\Doctrine\ORM\EntityManagerInterface $entityManager,
 		\PeckaDesk\Model\Files\FileStorageInterface $fileStorage,
 		\PeckaDesk\Model\DateTimeProviderInterface $dateTimeProvider,
-		\PeckaDesk\Dashboard\Users\UserFacadeInterface $userFacade
+		\PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade
 	)
 	{
 		$this->entityManager = $entityManager;

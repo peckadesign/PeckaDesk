@@ -40,7 +40,7 @@
 					<div class="c-avatar"><img class="c-avatar-img" src="https://www.gravatar.com/avatar/{\md5(\strtolower(\trim($user->getIdentity()->getEmail())))}?s=72" alt="user@email.com"></div>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right pt-0">
-					<div class="dropdown-header bg-light py-2"><strong>{='settings'|translate}</strong></div><a class="dropdown-item" href="#">
+					<div class="dropdown-header bg-light py-2"><strong>{='settings'|translate}</strong></div><a class="dropdown-item" href="{plink :Dashboard:Users:Detail: $user->getIdentity()}">
 						<svg class="c-icon mr-2">
 							<use xlink:href="{=$basePath.'/vendors/@coreui/icons/svg/free.svg#cil-user'}"></use>
 						</svg> {='profile'|translate}</a>
@@ -51,13 +51,19 @@
 				</div>
 			</li>
 		</ul>
-		<div class="c-subheader px-3">
+		<div class="c-subheader justify-content-between px-3">
 			<!-- Breadcrumb-->
 			<ol class="breadcrumb border-0 m-0">
 				{foreach $breadcrumb as $node}
 					<li class="breadcrumb-item"><a href="{plink $node->getLink(), (expand) $node->getParameters()}">{$node->getLabel()|translate}</a></li>
 				{/foreach}
 			</ol>
+			<div class="c-header-nav d-md-down-none mfe-2">
+				<a class="c-header-nav-link" href="{plink :Dashboard:Users:List:}">
+					<svg class="c-icon">
+						<use xlink:href="{=$basePath.'/vendors/@coreui/icons/svg/free.svg#cil-settings'}"></use>
+					</svg> &nbsp;{='settings'|translate}</a>
+			</div>
 		</div>
 	</header>
 	<div class="c-body">

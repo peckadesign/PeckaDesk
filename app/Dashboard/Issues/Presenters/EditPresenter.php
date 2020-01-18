@@ -11,13 +11,13 @@ final class EditPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresenter
 
 	private \PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade;
 
-	private \PeckaDesk\Dashboard\Users\UserFacadeInterface $userFacade;
+	private \PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade;
 
 
 	public function __construct(
 		\PeckaDesk\Dashboard\Issues\Forms\EditFormFactory $formFactory,
 		\PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade,
-		\PeckaDesk\Dashboard\Users\UserFacadeInterface $userFacade
+		\PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade
 	)
 	{
 		parent::__construct();

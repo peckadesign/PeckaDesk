@@ -9,7 +9,7 @@ final class OAuth2Presenter extends \Nette\Application\UI\Presenter
 
 	private \PeckaDesk\Dashboard\PeckaNotesLogin\StateStorage $stateStorage;
 
-	private \PeckaDesk\Dashboard\Users\UserFacadeInterface $userFacade;
+	private \PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade;
 
 	private \PeckaDesk\Dashboard\Users\PersistentLoginFacadeInterface $persistentLoginFacade;
 
@@ -17,7 +17,7 @@ final class OAuth2Presenter extends \Nette\Application\UI\Presenter
 	public function __construct(
 		\PeckaDesk\Dashboard\PeckaNotesLogin\PeckaNotesProvider $authProvider,
 		\PeckaDesk\Dashboard\PeckaNotesLogin\StateStorage $stateStorage,
-		\PeckaDesk\Dashboard\Users\UserFacadeInterface $userFacade,
+		\PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade,
 		\PeckaDesk\Dashboard\Users\PersistentLoginFacadeInterface $persistentLoginFacade
 	)
 	{

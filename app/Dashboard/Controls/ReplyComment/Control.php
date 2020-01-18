@@ -14,14 +14,14 @@ final class Control extends \Nette\Application\UI\Control
 
 	private \PeckaDesk\Model\Issues\Issue $issue;
 
-	private \PeckaDesk\Dashboard\Users\UserFacadeInterface $userFacade;
+	private \PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade;
 
 
 	public function __construct(
 		\PeckaDesk\Model\Issues\Issue $issue,
 		\PeckaDesk\Dashboard\Issues\Forms\ReplyFormFactory $replyFormFactory,
 		\PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade,
-		\PeckaDesk\Dashboard\Users\UserFacadeInterface $userFacade
+		\PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade
 	)
 	{
 		$this->replyFormFactory = $replyFormFactory;

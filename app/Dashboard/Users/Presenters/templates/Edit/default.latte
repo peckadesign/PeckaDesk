@@ -1,0 +1,45 @@
+{block content}
+
+{form form}
+
+<div class="row">
+	<div class="col-sm-6">
+		<div class="card">
+			<div class="card-header">
+				<strong>{='user'|translate}</strong>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="form-group">
+                            {label \PeckaDesk\Dashboard\Users\Forms\EditFormFactory::CONTROL_EMAIL:}
+							<input n:name="\PeckaDesk\Dashboard\Users\Forms\EditFormFactory::CONTROL_EMAIL" class="form-control" type="email">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="form-group">
+                            {label \PeckaDesk\Dashboard\Users\Forms\EditFormFactory::CONTROL_FIRST_NAME:}
+							<input n:name="\PeckaDesk\Dashboard\Users\Forms\EditFormFactory::CONTROL_FIRST_NAME" class="form-control" type="text">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="form-group">
+                            {label \PeckaDesk\Dashboard\Users\Forms\EditFormFactory::CONTROL_LAST_NAME:}
+							<input n:name="\PeckaDesk\Dashboard\Users\Forms\EditFormFactory::CONTROL_LAST_NAME" class="form-control" type="text">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-footer">
+				<button n:name="save" class="btn btn-sm btn-primary" type="submit">Submit</button>
+				<button class="btn btn-sm btn-danger" type="reset">Reset</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{/form}

@@ -7,19 +7,20 @@ final class Factory
 
 	private \PeckaDesk\Dashboard\Projects\Model\ProjectFacadeInterface $projectFacade;
 
-	/**
-	 * @var \PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface
-	 */
 	private \PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade;
+
+	private \PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade;
 
 
 	public function __construct(
 		\PeckaDesk\Dashboard\Projects\Model\ProjectFacadeInterface $projectFacade,
-		\PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade
+		\PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade,
+		\PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade
 	)
 	{
 		$this->projectFacade = $projectFacade;
 		$this->issueFacade = $issueFacade;
+		$this->userFacade = $userFacade;
 	}
 
 
@@ -81,6 +82,37 @@ final class Factory
 				$node->setAllowed(TRUE);
 				$node->setSelected($presenter instanceof \PeckaDesk\Dashboard\Issues\Presenters\EditPresenter && $presenter->getParameter('issue')->getId() === $issue->getId());
 				$nodeIssue->addChild($node);
+			}
+
+			$nodeUsers = new Node();
+			$nodeUsers->setLabel('users');
+			$nodeUsers->setLink(':Dashboard:Users:List', 'default');
+			$nodeUsers->setAllowed(TRUE);
+			$nodeUsers->setSelected($presenter instanceof \PeckaDesk\Dashboard\Users\Presenters\ListPresenter);
+			$navigation->addChild($nodeUsers);
+
+			$nodeAddUser = new Node();
+			$nodeAddUser->setLabel('add');
+			$nodeAddUser->setLink(':Dashboard:Users:Add', 'default');
+			$nodeAddUser->setAllowed(TRUE);
+			$nodeAddUser->setSelected($presenter instanceof \PeckaDesk\Dashboard\Users\Presenters\AddPresenter);
+			$navigation->addChild($nodeAddUser);
+
+			$users = $this->userFacade->fetchAll();
+			foreach ($users as $user) {
+				$nodeUser = new Node();
+				$nodeUser->setLabel($user->getFirstName() . ' ' . $user->getLastName());
+				$nodeUser->setLink(':Dashboard:Users:Detail', 'default', [$user]);
+				$nodeUser->setAllowed(TRUE);
+				$nodeUser->setSelected($presenter instanceof \PeckaDesk\Dashboard\Users\Presenters\DetailPresenter && $presenter->getParameter('user')->getId() === $user->getId());
+				$nodeUsers->addChild($nodeUser);
+
+				$node = new Node();
+				$node->setLabel('edit');
+				$node->setLink(':Dashboard:Users:Edit', 'default', [$user]);
+				$node->setAllowed(TRUE);
+				$node->setSelected($presenter instanceof \PeckaDesk\Dashboard\Users\Presenters\EditPresenter && $presenter->getParameter('user')->getId() === $user->getId());
+				$nodeUser->addChild($node);
 			}
 		}
 
