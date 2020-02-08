@@ -65,4 +65,14 @@ final class ProjectFacade implements ProjectFacadeInterface
 		return $qb->getQuery()->getResult();
 	}
 
+
+	public function addUserToProject(\PeckaDesk\Model\Projects\Project $project, \PeckaDesk\Model\Users\User $user, string $role): \PeckaDesk\Model\UsersOnProjects\UserOnProject
+	{
+		$userOnProject = new \PeckaDesk\Model\UsersOnProjects\UserOnProject($user, $project, $role);
+		$this->entityManager->persist($userOnProject);
+		$this->entityManager->flush();
+
+		return $userOnProject;
+	}
+
 }

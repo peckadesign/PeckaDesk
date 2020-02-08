@@ -6,7 +6,7 @@ namespace PeckaDesk\Model\Projects;
  * @\Doctrine\ORM\Mapping\Entity
  * @\Doctrine\ORM\Mapping\Table(name="project")
  */
-class Project
+class Project implements \Nette\Security\IResource
 {
 
 	/**
@@ -45,6 +45,12 @@ class Project
 	public function setName(string $name): void
 	{
 		$this->name = $name;
+	}
+
+
+	public function getResourceId(): string
+	{
+		return 'project' . $this->getId();
 	}
 
 }

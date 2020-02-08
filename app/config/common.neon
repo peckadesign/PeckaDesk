@@ -151,3 +151,18 @@ services:
 
 	-
 		factory: \PeckaDesk\Dashboard\Users\Forms\EditFormFactory
+
+	-
+		factory: \PeckaDesk\Dashboard\Projects\Forms\AddUserFormFactory
+
+	-
+		factory: \PeckaDesk\Dashboard\Projects\Grids\UsersOnProjectFactory
+
+	-
+		factory: \PeckaDesk\Dashboard\UsersOnProjects\Model\UsersOnProjectsFacade
+
+	-
+		factory: \PeckaDesk\Dashboard\Users\AclFactory
+
+	-
+		factory: @\PeckaDesk\Dashboard\Users\AclFactory::create()

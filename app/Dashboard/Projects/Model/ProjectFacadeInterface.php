@@ -25,4 +25,7 @@ interface ProjectFacadeInterface
 	 */
 	public function fetchAll(): array;
 
+
+	public function addUserToProject(\PeckaDesk\Model\Projects\Project $project, \PeckaDesk\Model\Users\User $user, string $role): \PeckaDesk\Model\UsersOnProjects\UserOnProject;
+
 }

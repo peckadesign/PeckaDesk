@@ -26,6 +26,8 @@ final class Translator implements \Nette\Localization\ITranslator
 	 */
 	public function translate($message, ...$parameters): string
 	{
+		$message = (string) $message;
+
 		return $this->langs[$message] ?? $message;
 	}
 

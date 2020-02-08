@@ -23,6 +23,9 @@ parameters:
 		firstName: Křestní jméno
 		lastName: Příjmení
 		user: Uživatel
+		administrator: Administrátor
+		support: Support
+		role: Role
 
 		# datagrid
 		ublaboo_datagrid.no_item_found_reset: Žádné položky nenelezeny. Můžete zkusit vymazat filtr

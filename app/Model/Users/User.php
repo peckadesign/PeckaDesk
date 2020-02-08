@@ -9,6 +9,14 @@ namespace PeckaDesk\Model\Users;
 class User implements \Nette\Security\IIdentity
 {
 
+	public const ROLE_ADMINISTRATOR = 'administrator';
+	public const ROLE_SUPPORT = 'support';
+
+	public static $ROLES = [
+		self::ROLE_ADMINISTRATOR => self::ROLE_ADMINISTRATOR,
+		self::ROLE_SUPPORT => self::ROLE_SUPPORT,
+	];
+
 	/**
 	 * @\Doctrine\ORM\Mapping\Id
 	 * @\Doctrine\ORM\Mapping\Column(type="integer")
@@ -41,6 +49,11 @@ class User implements \Nette\Security\IIdentity
 	 */
 	private \Doctrine\Common\Collections\Collection $persistentTokens;
 
+	/**
+	 * @\Doctrine\ORM\Mapping\OneToMany(targetEntity="\PeckaDesk\Model\UsersOnProjects\UserOnProject", mappedBy="user", cascade={"ALL"}, indexBy="project")
+	 */
+	private \Doctrine\Common\Collections\Collection $allowedProjects;
+
 
 	public function __construct(
 		string $email,
@@ -52,6 +65,7 @@ class User implements \Nette\Security\IIdentity
 		$this->firstName = $firstName;
 		$this->lastName = $lastName;
 		$this->persistentTokens = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->allowedProjects = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 
@@ -114,7 +128,9 @@ class User implements \Nette\Security\IIdentity
 	 */
 	public function getRoles(): array
 	{
-		return [];
+		$cb = function(\PeckaDesk\Model\UsersOnProjects\UserOnProject $userOnProject): string {
+			return  $userOnProject->getRoleId();
+		};
+		return $this->allowedProjects->map($cb)->toArray();
 	}
-
 }

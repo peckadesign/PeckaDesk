@@ -1,29 +1,66 @@
 {block content}
 
-{form form}
-
 <div class="row">
 	<div class="col-sm-6">
-		<div class="card">
-			<div class="card-header">
-				<strong>Projekt</strong>
-			</div>
-			<div class="card-body">
-				<div class="row">
-					<div class="col-sm-12">
-						<div class="form-group">
-							<label n:name="\PeckaDesk\Dashboard\Projects\Forms\EditFormFactory::CONTROL_NAME">Name</label>
-							<input n:name="\PeckaDesk\Dashboard\Projects\Forms\EditFormFactory::CONTROL_NAME" class="form-control" type="text" placeholder="Enter your name">
+		{form form}
+			<div class="card">
+				<div class="card-header">
+					<strong>Projekt</strong>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label n:name="\PeckaDesk\Dashboard\Projects\Forms\EditFormFactory::CONTROL_NAME">{='name'|translate}</label>
+								<input n:name="\PeckaDesk\Dashboard\Projects\Forms\EditFormFactory::CONTROL_NAME" class="form-control" type="text" placeholder="Enter your name">
+							</div>
 						</div>
 					</div>
 				</div>
+				<div class="card-footer">
+					<button n:name="save" class="btn btn-sm btn-primary" type="submit">Submit</button>
+					<button class="btn btn-sm btn-danger" type="reset">Reset</button>
+				</div>
 			</div>
-			<div class="card-footer">
-				<button n:name="save" class="btn btn-sm btn-primary" type="submit">Submit</button>
-				<button class="btn btn-sm btn-danger" type="reset">Reset</button>
+		{/form}
+	</div>
+	<div class="col-sm-6">
+		<div class="card">
+			<div class="card-header">
+				<strong>Uživatelé na projektu</strong>
+			</div>
+			<div class="card-body">
+				{control usersOnProjectGrid}
 			</div>
 		</div>
+		{form addUserForm}
+			<div class="card">
+				<div class="card-header">
+					<strong>Přidání uživatele</strong>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label n:name="\PeckaDesk\Dashboard\Projects\Forms\AddUserFormFactory::CONTROL_USER">{='user'|translate}</label>
+								<select class="form-control" n:name="\PeckaDesk\Dashboard\Projects\Forms\AddUserFormFactory::CONTROL_USER"></select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label n:name="\PeckaDesk\Dashboard\Projects\Forms\AddUserFormFactory::CONTROL_ROLE">{='role'|translate}</label>
+								<select class="form-control" n:name="\PeckaDesk\Dashboard\Projects\Forms\AddUserFormFactory::CONTROL_ROLE"></select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer">
+					<button n:name="save" class="btn btn-sm btn-primary" type="submit">Submit</button>
+					<button class="btn btn-sm btn-danger" type="reset">Reset</button>
+				</div>
+			</div>
+		{/form}
 	</div>
 </div>
-
-{/form}
