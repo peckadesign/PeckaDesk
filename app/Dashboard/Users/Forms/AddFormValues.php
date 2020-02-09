@@ -11,4 +11,6 @@ final class AddFormValues
 
 	public string $lastName;
 
+	public bool $administrator;
+
 }

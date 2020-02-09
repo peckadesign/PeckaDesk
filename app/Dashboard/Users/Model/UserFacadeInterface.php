@@ -28,4 +28,6 @@ interface UserFacadeInterface
 
 	public function saveFromAddForm(\PeckaDesk\Dashboard\Users\Forms\AddFormValues $addFormValues): \PeckaDesk\Model\Users\User;
 
+
+	public function fetchAdministrators(): array;
 }

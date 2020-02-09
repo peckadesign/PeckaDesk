@@ -9,14 +9,18 @@ final class Factory
 
 	private \PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade;
 
+	private \Nette\Security\User $user;
+
 
 	public function __construct(
 		\PeckaDesk\Dashboard\Grids\BaseFactory $baseFactory,
-		\PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade
+		\PeckaDesk\Dashboard\Users\Model\UserFacadeInterface $userFacade,
+		\Nette\Security\User $user
 	)
 	{
 		$this->baseFactory = $baseFactory;
 		$this->userFacade = $userFacade;
+		$this->user = $user;
 	}
 
 
@@ -32,8 +36,12 @@ final class Factory
 
 		$this->baseFactory->createAddButton($dataGrid, ':Dashboard:Users:Add:');
 
-		$this->baseFactory->createDetailButton($dataGrid, ':Dashboard:Users:Detail:');
-		$this->baseFactory->createEditButton($dataGrid, ':Dashboard:Users:Edit:');
+		$this->baseFactory->createDetailButton($dataGrid, ':Dashboard:Users:Detail:', function (\PeckaDesk\Model\Users\User $user): bool {
+			return $this->user->isAllowed(\PeckaDesk\Dashboard\Users\AclFactory::RESOURCE_USERS, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_READ);
+		});
+		$this->baseFactory->createEditButton($dataGrid, ':Dashboard:Users:Edit:', function (\PeckaDesk\Model\Users\User $user): bool {
+			return $this->user->isAllowed(\PeckaDesk\Dashboard\Users\AclFactory::RESOURCE_USERS, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_EDIT);
+		});
 
 		return $dataGrid;
 	}

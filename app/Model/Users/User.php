@@ -11,10 +11,12 @@ class User implements \Nette\Security\IIdentity
 
 	public const ROLE_ADMINISTRATOR = 'administrator';
 	public const ROLE_SUPPORT = 'support';
+	public const ROLE_CLIENT = 'client';
 
 	public static $ROLES = [
 		self::ROLE_ADMINISTRATOR => self::ROLE_ADMINISTRATOR,
 		self::ROLE_SUPPORT => self::ROLE_SUPPORT,
+		self::ROLE_CLIENT => self::ROLE_CLIENT,
 	];
 
 	/**
@@ -53,6 +55,11 @@ class User implements \Nette\Security\IIdentity
 	 * @\Doctrine\ORM\Mapping\OneToMany(targetEntity="\PeckaDesk\Model\UsersOnProjects\UserOnProject", mappedBy="user", cascade={"ALL"}, indexBy="project")
 	 */
 	private \Doctrine\Common\Collections\Collection $allowedProjects;
+
+	/**
+	 * @\Doctrine\ORM\Mapping\Column(type="boolean")
+	 */
+	private bool $administrator = FALSE;
 
 
 	public function __construct(
@@ -128,9 +135,33 @@ class User implements \Nette\Security\IIdentity
 	 */
 	public function getRoles(): array
 	{
-		$cb = function(\PeckaDesk\Model\UsersOnProjects\UserOnProject $userOnProject): string {
-			return  $userOnProject->getRoleId();
-		};
-		return $this->allowedProjects->map($cb)->toArray();
+		static $roles = NULL;
+
+		if ($roles === NULL) {
+			$cb = function (\PeckaDesk\Model\UsersOnProjects\UserOnProject $userOnProject): string {
+				return $userOnProject->getRoleId();
+			};
+
+			$roles = $this->allowedProjects->map($cb)->toArray();
+
+			if ($this->isAdministrator()) {
+				$roles = \array_merge($roles, [self::ROLE_ADMINISTRATOR]);
+			}
+		}
+
+		return $roles;
 	}
+
+
+	public function isAdministrator(): bool
+	{
+		return $this->administrator;
+	}
+
+
+	public function setAdministrator(bool $administrator): void
+	{
+		$this->administrator = $administrator;
+	}
+
 }

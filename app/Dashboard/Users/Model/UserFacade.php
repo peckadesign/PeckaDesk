@@ -73,6 +73,7 @@ final class UserFacade implements UserFacadeInterface
 		$user->setEmail($editFormValues->email);
 		$user->setFirstName($editFormValues->firstName);
 		$user->setLastName($editFormValues->lastName);
+		$user->setAdministrator($editFormValues->administrator);
 		$this->entityManager->flush();
 	}
 
@@ -80,10 +81,21 @@ final class UserFacade implements UserFacadeInterface
 	public function saveFromAddForm(\PeckaDesk\Dashboard\Users\Forms\AddFormValues $addFormValues): \PeckaDesk\Model\Users\User
 	{
 		$user = new \PeckaDesk\Model\Users\User($addFormValues->email, $addFormValues->firstName, $addFormValues->lastName);
+		$user->setAdministrator($addFormValues->administrator);
 		$this->entityManager->persist($user);
 		$this->entityManager->flush();
 
 		return $user;
+	}
+
+
+	public function fetchAdministrators(): array
+	{
+		$qb = $this->queryFactory();
+
+		$qb->where('u.administrator = 1');
+
+		return $qb->getQuery()->getResult();
 	}
 
 }

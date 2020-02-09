@@ -166,3 +166,6 @@ services:
 
 	-
 		factory: @\PeckaDesk\Dashboard\Users\AclFactory::create()
+
+	nette.userStorage:
+		factory: \PeckaDesk\Model\Users\UserStorage

@@ -17,7 +17,7 @@ class UserOnProject implements \Nette\Security\IRole
 
 	/**
 	 * @\Doctrine\ORM\Mapping\Id
-	 * @\Doctrine\ORM\Mapping\ManyToOne(targetEntity="\PeckaDesk\Model\Projects\Project")
+	 * @\Doctrine\ORM\Mapping\ManyToOne(targetEntity="\PeckaDesk\Model\Projects\Project", inversedBy="allowedProjects")
 	 */
 	private \PeckaDesk\Model\Projects\Project $project;
 

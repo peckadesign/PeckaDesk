@@ -37,6 +37,10 @@ final class EditPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresenter
 
 	public function actionDefault(\PeckaDesk\Model\Projects\Project $project): void
 	{
+		if ( ! $this->getUser()->isAllowed($project, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_EDIT)) {
+			throw new \Nette\Application\ForbiddenRequestException();
+		}
+
 		$this->project = $project;
 
 		$this['form']->setDefaults(\PeckaDesk\Dashboard\Projects\Forms\EditFormValues::createFromProject($this->project));

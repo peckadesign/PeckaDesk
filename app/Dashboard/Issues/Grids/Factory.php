@@ -7,19 +7,20 @@ final class Factory
 
 	private \PeckaDesk\Dashboard\Grids\BaseFactory $baseFactory;
 
-	/**
-	 * @var \PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface
-	 */
 	private \PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade;
+
+	private \Nette\Security\User $user;
 
 
 	public function __construct(
 		\PeckaDesk\Dashboard\Grids\BaseFactory $baseFactory,
-		\PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade
+		\PeckaDesk\Dashboard\Issues\Model\IssueFacadeInterface $issueFacade,
+		\Nette\Security\User $user
 	)
 	{
 		$this->baseFactory = $baseFactory;
 		$this->issueFacade = $issueFacade;
+		$this->user = $user;
 	}
 
 
@@ -32,10 +33,16 @@ final class Factory
 
 		$dataGrid->addColumnText('name', 'name');
 
-		$this->baseFactory->createAddButton($dataGrid, ':Dashboard:Issues:Add:', [$project]);
+		if ($this->user->isAllowed($project, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_CREATE_ISSUE)) {
+			$this->baseFactory->createAddButton($dataGrid, ':Dashboard:Issues:Add:', [$project]);
+		}
 
-		$this->baseFactory->createDetailButton($dataGrid, ':Dashboard:Issues:Detail:');
-		$this->baseFactory->createEditButton($dataGrid, ':Dashboard:Issues:Edit:');
+		$this->baseFactory->createDetailButton($dataGrid, ':Dashboard:Issues:Detail:', function (\PeckaDesk\Model\Projects\Project $project): bool {
+			return $this->user->isAllowed($project, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_READ);
+		});
+		$this->baseFactory->createEditButton($dataGrid, ':Dashboard:Issues:Edit:', function (\PeckaDesk\Model\Projects\Project $project): bool {
+			return $this->user->isAllowed($project, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_EDIT);
+		});
 
 		return $dataGrid;
 	}

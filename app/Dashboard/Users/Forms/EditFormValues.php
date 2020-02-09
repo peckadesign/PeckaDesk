@@ -11,6 +11,8 @@ final class EditFormValues
 
 	public string $lastName;
 
+	public bool $administrator;
+
 
 	public static function createFromUser(\PeckaDesk\Model\Users\User $User): self
 	{
@@ -19,6 +21,7 @@ final class EditFormValues
 		$return->email = $User->getEmail();
 		$return->firstName = $User->getFirstName();
 		$return->lastName = $User->getLastName();
+		$return->administrator = $User->isAdministrator();
 
 		return $return;
 	}

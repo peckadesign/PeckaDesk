@@ -21,6 +21,10 @@ final class DetailPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresente
 
 	public function actionDefault(\PeckaDesk\Model\Users\User $user): void
 	{
+		if ( ! $this->getUser()->isAllowed(\PeckaDesk\Dashboard\Users\AclFactory::RESOURCE_USERS, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_READ)) {
+			throw new \Nette\Application\ForbiddenRequestException();
+		}
+
 		$this->editedUser = $user;
 	}
 

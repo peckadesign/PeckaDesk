@@ -25,23 +25,26 @@ final class BaseFactory
 		return $dataGrid;
 	}
 
-	public function createDetailButton(\Ublaboo\DataGrid\DataGrid $dataGrid, string $href): void
+	public function createDetailButton(\Ublaboo\DataGrid\DataGrid $dataGrid, string $href, callable $conditionCallback): void
 	{
 		$dataGrid
 			->addAction('detail', 'detail', $href)
 			->setRenderer(static function ($entity) use ($href, $dataGrid): \Nette\Utils\Html {
 				return \Nette\Utils\Html::el('a', ['href' => $dataGrid->getPresenter()->link($href, [$entity]), 'class' => 'btn btn-info'])->setText($dataGrid->getTranslator()->translate('detail'));
-		});
+			})
+			->setRenderCondition($conditionCallback)
+		;
 	}
 
 
-	public function createEditButton(\Ublaboo\DataGrid\DataGrid $dataGrid, string $href): void
+	public function createEditButton(\Ublaboo\DataGrid\DataGrid $dataGrid, string $href, callable $conditionCallback): void
 	{
 		$dataGrid
 			->addAction('edit', 'edit', $href)
 			->setRenderer(static function ($entity) use ($href, $dataGrid): \Nette\Utils\Html {
 				return \Nette\Utils\Html::el('a', ['href' => $dataGrid->getPresenter()->link($href, [$entity]), 'class' => 'btn btn-warning'])->setText($dataGrid->getTranslator()->translate('edit'));
 			})
+			->setRenderCondition($conditionCallback)
 		;
 	}
 

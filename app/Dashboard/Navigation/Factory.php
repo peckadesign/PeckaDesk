@@ -28,17 +28,19 @@ final class Factory
 	{
 		$navigation = new Node();
 
+		$user = $presenter->getUser();
+
 		$nodeProjects = new Node();
 		$nodeProjects->setLabel('projects');
 		$nodeProjects->setLink(':Dashboard:Projects:List', 'default');
-		$nodeProjects->setAllowed(TRUE);
+		$nodeProjects->setAllowed($user->isAllowed(\PeckaDesk\Dashboard\Users\AclFactory::RESOURCE_PROJECTS, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_READ));
 		$nodeProjects->setSelected($presenter instanceof \PeckaDesk\Dashboard\Projects\Presenters\ListPresenter);
 		$navigation->addChild($nodeProjects);
 
 		$addProject = new Node();
 		$addProject->setLabel('add');
 		$addProject->setLink(':Dashboard:Projects:Add', 'default');
-		$addProject->setAllowed(TRUE);
+		$addProject->setAllowed($user->isAllowed(\PeckaDesk\Dashboard\Users\AclFactory::RESOURCE_PROJECTS, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_ADD));
 		$addProject->setSelected($presenter instanceof \PeckaDesk\Dashboard\Projects\Presenters\AddPresenter);
 		$nodeProjects->addChild($addProject);
 
@@ -46,21 +48,21 @@ final class Factory
 			$nodeProject = new Node();
 			$nodeProject->setLabel($project->getName());
 			$nodeProject->setLink(':Dashboard:Projects:Detail', 'default', [$project]);
-			$nodeProject->setAllowed(TRUE);
+			$nodeProject->setAllowed($user->isAllowed($project, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_READ));
 			$nodeProject->setSelected($presenter instanceof \PeckaDesk\Dashboard\Projects\Presenters\DetailPresenter && $presenter->getParameter('project')->getId() === $project->getId());
 			$nodeProjects->addChild($nodeProject);
 
 			$node = new Node();
 			$node->setLabel('addIssue');
 			$node->setLink(':Dashboard:Issues:Add', 'default', [$project]);
-			$node->setAllowed(TRUE);
+			$node->setAllowed($user->isAllowed($project, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_CREATE_ISSUE));
 			$node->setSelected($presenter instanceof \PeckaDesk\Dashboard\Issues\Presenters\AddPresenter && $presenter->getParameter('project')->getId() === $project->getId());
 			$nodeProject->addChild($node);
 
 			$node = new Node();
 			$node->setLabel('edit');
 			$node->setLink(':Dashboard:Projects:Edit', 'default', [$project]);
-			$node->setAllowed(TRUE);
+			$node->setAllowed($user->isAllowed(\PeckaDesk\Dashboard\Users\AclFactory::RESOURCE_PROJECTS, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_EDIT));
 			$node->setSelected($presenter instanceof \PeckaDesk\Dashboard\Projects\Presenters\EditPresenter && $presenter->getParameter('project')->getId() === $project->getId());
 			$nodeProject->addChild($node);
 
@@ -72,14 +74,14 @@ final class Factory
 				$nodeIssue = new Node();
 				$nodeIssue->setLabel($issue->getName());
 				$nodeIssue->setLink(':Dashboard:Issues:Detail', 'default', [$issue]);
-				$nodeIssue->setAllowed(TRUE);
+				$nodeIssue->setAllowed($user->isAllowed($project, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_READ));
 				$nodeIssue->setSelected($presenter instanceof \PeckaDesk\Dashboard\Issues\Presenters\DetailPresenter && $presenter->getParameter('issue')->getId() === $issue->getId());
 				$nodeProject->addChild($nodeIssue);
 
 				$node = new Node();
 				$node->setLabel('edit');
 				$node->setLink(':Dashboard:Issues:Edit', 'default', [$issue]);
-				$node->setAllowed(TRUE);
+				$node->setAllowed($user->isAllowed($project, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_EDIT));
 				$node->setSelected($presenter instanceof \PeckaDesk\Dashboard\Issues\Presenters\EditPresenter && $presenter->getParameter('issue')->getId() === $issue->getId());
 				$nodeIssue->addChild($node);
 			}
@@ -87,31 +89,31 @@ final class Factory
 			$nodeUsers = new Node();
 			$nodeUsers->setLabel('users');
 			$nodeUsers->setLink(':Dashboard:Users:List', 'default');
-			$nodeUsers->setAllowed(TRUE);
+			$nodeUsers->setAllowed($user->isAllowed(\PeckaDesk\Dashboard\Users\AclFactory::RESOURCE_USERS, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_READ));
 			$nodeUsers->setSelected($presenter instanceof \PeckaDesk\Dashboard\Users\Presenters\ListPresenter);
 			$navigation->addChild($nodeUsers);
 
 			$nodeAddUser = new Node();
 			$nodeAddUser->setLabel('add');
 			$nodeAddUser->setLink(':Dashboard:Users:Add', 'default');
-			$nodeAddUser->setAllowed(TRUE);
+			$nodeAddUser->setAllowed($user->isAllowed(\PeckaDesk\Dashboard\Users\AclFactory::RESOURCE_USERS, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_ADD));
 			$nodeAddUser->setSelected($presenter instanceof \PeckaDesk\Dashboard\Users\Presenters\AddPresenter);
-			$navigation->addChild($nodeAddUser);
+			$nodeUsers->addChild($nodeAddUser);
 
 			$users = $this->userFacade->fetchAll();
-			foreach ($users as $user) {
+			foreach ($users as $person) {
 				$nodeUser = new Node();
-				$nodeUser->setLabel($user->getFirstName() . ' ' . $user->getLastName());
-				$nodeUser->setLink(':Dashboard:Users:Detail', 'default', [$user]);
-				$nodeUser->setAllowed(TRUE);
-				$nodeUser->setSelected($presenter instanceof \PeckaDesk\Dashboard\Users\Presenters\DetailPresenter && $presenter->getParameter('user')->getId() === $user->getId());
+				$nodeUser->setLabel($person->getFirstName() . ' ' . $person->getLastName());
+				$nodeUser->setLink(':Dashboard:Users:Detail', 'default', [$person]);
+				$nodeUser->setAllowed($user->isAllowed(\PeckaDesk\Dashboard\Users\AclFactory::RESOURCE_USERS, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_READ));
+				$nodeUser->setSelected($presenter instanceof \PeckaDesk\Dashboard\Users\Presenters\DetailPresenter && $presenter->getParameter('user')->getId() === $person->getId());
 				$nodeUsers->addChild($nodeUser);
 
 				$node = new Node();
 				$node->setLabel('edit');
-				$node->setLink(':Dashboard:Users:Edit', 'default', [$user]);
-				$node->setAllowed(TRUE);
-				$node->setSelected($presenter instanceof \PeckaDesk\Dashboard\Users\Presenters\EditPresenter && $presenter->getParameter('user')->getId() === $user->getId());
+				$node->setLink(':Dashboard:Users:Edit', 'default', [$person]);
+				$node->setAllowed($user->isAllowed(\PeckaDesk\Dashboard\Users\AclFactory::RESOURCE_USERS, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_EDIT));
+				$node->setSelected($presenter instanceof \PeckaDesk\Dashboard\Users\Presenters\EditPresenter && $presenter->getParameter('user')->getId() === $person->getId());
 				$nodeUser->addChild($node);
 			}
 		}

@@ -25,6 +25,10 @@ final class DetailPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresente
 
 	public function actionDefault(\PeckaDesk\Model\Projects\Project $project): void
 	{
+		if ( ! $this->getUser()->isAllowed($project, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_READ)) {
+			throw new \Nette\Application\ForbiddenRequestException();
+		}
+
 		$this->project = $project;
 	}
 

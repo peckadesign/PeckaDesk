@@ -4,6 +4,7 @@ namespace PeckaDesk\Dashboard\Users\Presenters;
 
 final class ListPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresenter
 {
+
 	private \PeckaDesk\Dashboard\Users\Grids\Factory $factory;
 
 
@@ -18,7 +19,9 @@ final class ListPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresenter
 
 	public function actionDefault(): void
 	{
-
+		if ( ! $this->getUser()->isAllowed(\PeckaDesk\Dashboard\Users\AclFactory::RESOURCE_USERS, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_READ)) {
+			throw new \Nette\Application\ForbiddenRequestException();
+		}
 	}
 
 

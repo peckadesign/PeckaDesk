@@ -58,7 +58,7 @@
 					<li class="breadcrumb-item"><a href="{plink $node->getLink(), (expand) $node->getParameters()}">{$node->getLabel()|translate}</a></li>
 				{/foreach}
 			</ol>
-			<div class="c-header-nav d-md-down-none mfe-2">
+			<div class="c-header-nav d-md-down-none mfe-2" n:if="$user->isAllowed(\PeckaDesk\Dashboard\Users\AclFactory::RESOURCE_USERS, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_READ)">
 				<a class="c-header-nav-link" href="{plink :Dashboard:Users:List:}">
 					<svg class="c-icon">
 						<use xlink:href="{=$basePath.'/vendors/@coreui/icons/svg/free.svg#cil-settings'}"></use>

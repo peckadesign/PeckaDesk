@@ -8,6 +8,7 @@ final class EditFormFactory
 	public const CONTROL_EMAIL = 'email';
 	public const CONTROL_FIRST_NAME = 'firstName';
 	public const CONTROL_LAST_NAME = 'lastName';
+	public const CONTROL_ADMINISTRATOR = 'administrator';
 
 	private \PeckaDesk\Dashboard\Forms\BaseFactory $baseFactory;
 
@@ -36,6 +37,10 @@ final class EditFormFactory
 		$form
 			->addText(self::CONTROL_LAST_NAME, 'lastName', NULL, 255)
 			->setRequired(TRUE)
+		;
+
+		$form
+			->addCheckbox(self::CONTROL_ADMINISTRATOR, 'administrator')
 		;
 
 		return $form;

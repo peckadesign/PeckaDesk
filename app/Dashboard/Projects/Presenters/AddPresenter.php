@@ -23,6 +23,9 @@ final class AddPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresenter
 
 	public function actionDefault(): void
 	{
+		if ( ! $this->getUser()->isAllowed(\PeckaDesk\Dashboard\Users\AclFactory::RESOURCE_PROJECTS, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_ADD)) {
+			throw new \Nette\Application\ForbiddenRequestException();
+		}
 	}
 
 

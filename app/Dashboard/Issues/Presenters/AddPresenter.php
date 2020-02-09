@@ -33,6 +33,10 @@ final class AddPresenter extends \PeckaDesk\Dashboard\Presenters\BasePresenter
 
 	public function actionDefault(\PeckaDesk\Model\Projects\Project $project): void
 	{
+		if ( ! $this->getUser()->isAllowed($project, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_CREATE_ISSUE)) {
+			throw new \Nette\Application\ForbiddenRequestException();
+		}
+
 		$this->project = $project;
 	}
 
