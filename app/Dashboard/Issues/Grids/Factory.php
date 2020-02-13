@@ -37,11 +37,11 @@ final class Factory
 			$this->baseFactory->createAddButton($dataGrid, ':Dashboard:Issues:Add:', [$project]);
 		}
 
-		$this->baseFactory->createDetailButton($dataGrid, ':Dashboard:Issues:Detail:', function (\PeckaDesk\Model\Projects\Project $project): bool {
-			return $this->user->isAllowed($project, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_READ);
+		$this->baseFactory->createDetailButton($dataGrid, ':Dashboard:Issues:Detail:', function (\PeckaDesk\Model\Issues\Issue $issue): bool {
+			return $this->user->isAllowed($issue->getProject(), \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_READ);
 		});
-		$this->baseFactory->createEditButton($dataGrid, ':Dashboard:Issues:Edit:', function (\PeckaDesk\Model\Projects\Project $project): bool {
-			return $this->user->isAllowed($project, \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_EDIT);
+		$this->baseFactory->createEditButton($dataGrid, ':Dashboard:Issues:Edit:', function (\PeckaDesk\Model\Issues\Issue $issue): bool {
+			return $this->user->isAllowed($issue->getProject(), \PeckaDesk\Dashboard\Users\AclFactory::PERMISSION_EDIT);
 		});
 
 		return $dataGrid;
