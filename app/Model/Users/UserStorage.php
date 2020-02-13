@@ -56,6 +56,10 @@ final class UserStorage extends \Nette\Http\UserStorage
 	{
 		$identity = parent::getIdentity();
 
+		if ($identity === NULL) {
+			return NULL;
+		}
+
 		return $this->entityManager->find(User::class, $identity->getId());
 	}
 
