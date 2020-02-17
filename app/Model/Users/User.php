@@ -12,6 +12,7 @@ class User implements \Nette\Security\IIdentity
 	public const ROLE_ADMINISTRATOR = 'administrator';
 	public const ROLE_SUPPORT = 'support';
 	public const ROLE_CLIENT = 'client';
+	public const ROLE_AUTHENTICATED = 'authenticated';
 
 	public static $ROLES = [
 		self::ROLE_ADMINISTRATOR => self::ROLE_ADMINISTRATOR,
@@ -147,6 +148,8 @@ class User implements \Nette\Security\IIdentity
 			if ($this->isAdministrator()) {
 				$roles = \array_merge($roles, [self::ROLE_ADMINISTRATOR]);
 			}
+
+			$roles = \array_merge($roles, [self::ROLE_AUTHENTICATED]);
 		}
 
 		return $roles;
