@@ -2,4 +2,15 @@
 
 <h1>{$project->getName()}</h1>
 
-{control issueGrid}
+<div class="container">
+	<div class="row">
+		<div class="col-md-9">
+			<div class="card">
+				<div class="card-header">{='issues'|translate}</div>
+				<div class="card-body">
+                    {control issueGrid}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
