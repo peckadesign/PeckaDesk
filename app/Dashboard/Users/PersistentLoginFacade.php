@@ -43,6 +43,9 @@ final class PersistentLoginFacade implements PersistentLoginFacadeInterface
 		$this->entityManager->flush();
 
 		$this->response->setCookie('persistentLogin', $token, '+ 1 year');
+		$user->onLoggedOut[] = function (): void {
+			$this->cleanPersistentToken();
+		};
 	}
 
 
@@ -64,6 +67,17 @@ final class PersistentLoginFacade implements PersistentLoginFacadeInterface
 		}
 
 		$user->login($persistentLogin->getUser());
+		$user->onLoggedOut[] = function () use ($persistentLogin): void {
+			$this->cleanPersistentToken($persistentLogin);
+		};
+	}
+
+
+	private function cleanPersistentToken(?PersistentLogin $login = NULL): void
+	{
+		$this->response->deleteCookie('persistentLogin');
+		$this->entityManager->remove($login);
+		$this->entityManager->flush();
 	}
 
 }
