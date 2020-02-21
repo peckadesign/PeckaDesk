@@ -6,7 +6,7 @@ namespace PeckaDesk\Model\Issues;
  * @\Doctrine\ORM\Mapping\Entity
  * @\Doctrine\ORM\Mapping\Table(name="comment")
  */
-class Comment
+class Comment implements \PeckaDesk\Model\CreatedInterface
 {
 
 	use \PeckaDesk\Model\CreatedTrait;

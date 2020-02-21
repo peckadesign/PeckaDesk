@@ -1,0 +1,26 @@
+{if $show}
+	{form changeStatusForm}
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="card">
+						<div class="card-header">
+							{='changeStatus'|translate}
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-12">
+									<button n:name="\PeckaDesk\Dashboard\Issues\Forms\ChangeStatusFormFactory::CONTROL_ACCEPT" class="btn btn-success" type="submit" n:ifset="$form[\PeckaDesk\Dashboard\Issues\Forms\ChangeStatusFormFactory::CONTROL_ACCEPT]">{='accept'|translate}</button>
+									<button n:name="\PeckaDesk\Dashboard\Issues\Forms\ChangeStatusFormFactory::CONTROL_REJECT" class="btn btn-danger" type="submit" n:ifset="$form[\PeckaDesk\Dashboard\Issues\Forms\ChangeStatusFormFactory::CONTROL_REJECT]">{='reject'|translate}</button>
+									<button n:name="\PeckaDesk\Dashboard\Issues\Forms\ChangeStatusFormFactory::CONTROL_WORK" class="btn btn-danger" type="submit" n:ifset="$form[\PeckaDesk\Dashboard\Issues\Forms\ChangeStatusFormFactory::CONTROL_WORK]">{='work'|translate}</button>
+									<button n:name="\PeckaDesk\Dashboard\Issues\Forms\ChangeStatusFormFactory::CONTROL_FINISH" class="btn btn-danger" type="submit" n:ifset="$form[\PeckaDesk\Dashboard\Issues\Forms\ChangeStatusFormFactory::CONTROL_FINISH]">{='finish'|translate}</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	{/form}
+{/if}

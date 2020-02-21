@@ -6,7 +6,7 @@ namespace PeckaDesk\Model\Issues;
  * @\Doctrine\ORM\Mapping\Entity
  * @\Doctrine\ORM\Mapping\Table(name="issue")
  */
-class Issue
+class Issue implements \PeckaDesk\Model\CreatedInterface
 {
 
 	use \PeckaDesk\Model\CreatedTrait;
@@ -35,6 +35,12 @@ class Issue
 	 */
 	private \Doctrine\Common\Collections\Collection $comments;
 
+	/**
+	 * @\Doctrine\ORM\Mapping\OneToMany(targetEntity="\PeckaDesk\Model\Issues\Status", mappedBy="issue", indexBy="created")
+	 * @\Doctrine\ORM\Mapping\OrderBy({"created" = "ASC"})
+	 */
+	private \Doctrine\Common\Collections\Collection $statuses;
+
 
 	public function __construct(
 		\PeckaDesk\Model\Projects\Project $project,
@@ -48,6 +54,7 @@ class Issue
 		$this->comments = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->createdBy = $createdBy;
 		$this->created = $created;
+		$this->statuses = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 
@@ -102,6 +109,27 @@ class Issue
 	private function getCurrentRevision(): Revision
 	{
 		return $this->getComment()->getCurrentRevision();
+	}
+
+
+	public function changeStatus(string $status, \PeckaDesk\Model\Users\User $createdBy, \DateTimeImmutable $created): Status
+	{
+		$status = new Status($this, $status, $createdBy, $created);
+		$this->statuses->add($status);
+
+		return $status;
+	}
+
+
+	public function getStatus(): Status
+	{
+		return $this->statuses->last();
+	}
+
+
+	public function getStatuses(): \Doctrine\Common\Collections\Collection
+	{
+		return $this->statuses;
 	}
 
 }

@@ -28,4 +28,13 @@ interface IssueFacadeInterface
 	 */
 	public function fetchAll(\PeckaDesk\Model\Projects\Project $project): array;
 
+
+	public function changeStatus(\PeckaDesk\Model\Issues\Issue $issue, string $status, \PeckaDesk\Model\Users\User $createdBy): \PeckaDesk\Model\Issues\Status;
+
+
+	/**
+	 * @return array<\PeckaDesk\Model\CreatedInterface>
+	 */
+	public function loadIssuePosts(\PeckaDesk\Model\Issues\Issue $issue): array;
+
 }

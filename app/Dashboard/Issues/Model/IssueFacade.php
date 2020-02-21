@@ -131,4 +131,37 @@ final class IssueFacade implements IssueFacadeInterface
 		return $qb->getQuery()->getResult();
 	}
 
+
+	public function changeStatus(\PeckaDesk\Model\Issues\Issue $issue, string $status, \PeckaDesk\Model\Users\User $createdBy): \PeckaDesk\Model\Issues\Status
+	{
+		$status = $issue->changeStatus($status, $createdBy, $this->dateTimeProvider->createDateTime());
+		$this->entityManager->persist($status);
+		$this->entityManager->flush();
+
+		return $status;
+	}
+
+
+	public function loadIssuePosts(\PeckaDesk\Model\Issues\Issue $issue): array
+	{
+		$comments = $issue->getComments();
+		$statuses = $issue->getStatuses();
+
+		$posts = [];
+		foreach ($comments as $comment) {
+			$posts[] = $comment;
+		}
+
+		foreach ($statuses as $status) {
+			$posts[] = $status;
+		}
+
+		$cb = function (\PeckaDesk\Model\CreatedInterface $a, \PeckaDesk\Model\CreatedInterface $b) {
+			return ((int) $a->getCreated()->format('U')) <=> ((int) $b->getCreated()->format('U'));
+		};
+		\usort($posts, $cb);
+
+		return $posts;
+	}
+
 }

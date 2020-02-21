@@ -169,3 +169,9 @@ services:
 
 	nette.userStorage:
 		factory: \PeckaDesk\Model\Users\UserStorage
+
+	-
+		factory: \PeckaDesk\Dashboard\Issues\Forms\ChangeStatusFormFactory
+
+	-
+		implement: \PeckaDesk\Dashboard\Issues\Controls\ChangeStatus\FactoryInterface

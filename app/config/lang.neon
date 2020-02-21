@@ -30,6 +30,15 @@ parameters:
 		usersOnProjectAdd: Přidat uživatele na projekt
 		client: Klient
 		issue: Issue
+		changeStatus: Změna stavu
+		accept: Přijmout
+		reject: Zamítnout
+		work: Pracovat
+		finish: Dokončit
+		statusNew: Nový
+		statusAccepted: Přijatý
+		statusWorking: Ve zpracování
+		statusFinished: Vyřešený
 
 		# datagrid
 		ublaboo_datagrid.no_item_found_reset: Žádné položky nenelezeny. Můžete zkusit vymazat filtr
